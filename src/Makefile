@@ -39,7 +39,8 @@ clean:
 
 build: 
 	docker build -t apcmetrinome/develop:latest .
-
+push:
+	docker push apcmetrinome/develop
 ifeq ($(UNAME_S),Darwin)
 run:
 	docker container prune -f --filter "label=metrinome_repl" > /dev/null
