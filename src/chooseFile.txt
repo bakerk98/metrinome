@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 /app/code/experiments/testFiles.txt
-=======
-/app/code/experiments/testFiles.txt 
->>>>>>> b53077222b87211c3958259e0ce6a2eaf59fbc91
 
 we are only testing in the above file, below is a list of file path for easy copy paste:
 
