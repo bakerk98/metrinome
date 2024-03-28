@@ -53,7 +53,7 @@ class DataCollector:
                 # if graph_name == 'sudoku_f2f_cfg._Z7trycellPii.dot':
                 #     new_row = {"file_name": file, "graph_name": graph.name, "rapc": 'na',
                 #            "rapc_time": 'na'}
-                #     data = data.append(new_row, ignore_index=True)
+                #     data = data._append(new_row, ignore_index=True)
                 #     data = data[["graph_name", "rapc", "rapc_time"]]
                 #     print(data[["graph_name", "rapc", "rapc_time"]])
 
@@ -65,7 +65,7 @@ class DataCollector:
                 # if graph_name == 'truncatable_primes_f2f_cfg._Z4leftii.dot':
                 #     new_row = {"file_name": file, "graph_name": graph.name, "rapc": 'na',
                 #            "rapc_time": 'na'}
-                #     data = data.append(new_row, ignore_index=True)
+                #     data = data._append(new_row, ignore_index=True)
                 #     data = data[["graph_name", "rapc", "rapc_time"]]
                 #     print(data[["graph_name", "rapc", "rapc_time"]])
 
@@ -84,7 +84,7 @@ class DataCollector:
                 if graph_name == "bubble_sort_2_cfg.bubble_sort.dot" or graph_name == "heap_sort_2_cfg.heapSort.dot":
                     new_row = {"file_name": file, "graph_name": graph.name, "npath": 'na',
                           "npath_time": 'na'}
-                    data = data.append(new_row, ignore_index=True)
+                    data = data._append(new_row, ignore_index=True)
                     data = data[["graph_name", "npath", "npath_time"]]
                     print(data[["graph_name", "npath", "npath_time"]])
                     if not os.path.exists("/app/code/experiments/function_calls/data"):
@@ -105,7 +105,7 @@ class DataCollector:
                 new_row = {"file_name": file, "graph_name": graph.name, "npath": npath,
                            "npath_time": nruntime,"exception_type": exception_type}
 
-                data = data.append(new_row, ignore_index=True)
+                data = data._append(new_row, ignore_index=True)
                 # only keep columns graph_name, npath, npath_time
                 data = data[["graph_name", "npath", "npath_time"]]
 
