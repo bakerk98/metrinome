@@ -9,6 +9,7 @@ from typing import Union
 import time
 import os
 import sys
+import json
 from sympy import Number
 
 class DataCollector:
@@ -21,15 +22,19 @@ class DataCollector:
         self.converter = CPPConvert(log)
 
     # pylint: disable=broad-except
-    def collect(self) -> None:
+    def collect(self, path:str) -> None:
         """Compute the metrics for all files and store the data."""
         data = pd.DataFrame({"file_name": [], "graph_name": [], "npath": [], "npath_time": [],"exception": [],"exception_type": []})
-        with open("/app/code/chooseFile.txt") as filess:
-            filePathwithComments = [line.rstrip() for line in filess]
-            filePath = filePathwithComments[0].split()[0]
-            print(filePath)
-        with open(filePath) as funcs:
-            # files = ['/app/code/experiments/recursion/files/catalan-numbers-1.c' ]
+        
+        # this is needed if we're using Testing.sh and chooseFile.txt
+        if (path=="/app/code/chooseFile.txt"):
+            with open(path) as filess:
+                filePathwithComments = [line.rstrip() for line in filess]
+                path = filePathwithComments[0].split()[0]
+                print(f"benchmark that we are testing {path}")
+        
+        # this needs to happen no matter which script we run
+        with open(path) as funcs:
             files = [line.rstrip() for line in funcs]
 
         for i in files:
@@ -137,11 +142,21 @@ def notin(graph_name, funcs):
             return False
     return True
 
-def main() -> None:
+def main(path:str) -> None:
     """Compute metrics for many graphs."""
+
     data_collector = DataCollector()
-    data_collector.collect()
+    data_collector.collect(path)
 
 
 if __name__ == "__main__":
-    main()
+
+    # If arguments exist, we're using Benchmark.sh
+    if len(sys.argv) > 1:
+        paper_dict = json.loads(sys.argv[2])
+        paper_num = sys.argv[1]
+        main(paper_dict[paper_num])
+    
+    # For Testing.sh
+    else:
+        main("/app/code/chooseFile.txt")

@@ -1,36 +1,72 @@
-# Add papers below in chronological order :)
-
-printf "HELLO! WELCOME TO METRINOME. PRESS THE CORRESPONDING NUMBER TO SEE THE BENCHMARKS FROM THAT PAPER.\n\
-   1) ISSTA 2024 PAPER\n\
-   2) ICSE 2024 POSTER\n\
-   3) ICSE 2021 PAPER\n"
-
-# Add valid papers to this list as we expand
+# Add paths to this list
 paper_dict='{
-   "0": "/app/code/chooseFile.txt",
-   "1": "/app/code/tests/cFiles/C-master/CmasterFiles.txt",
-   "2": "/app/code/experiments/function_calls/benchmark/benchmarkFiles.txt",
-   "3": "/app/code/experiments/icse_experiment/files/files.txt"
+   "1": "/app/code/experiments/icse_experiment/files/files.txt",
+   "2": "/app/code/experiments/recursion/files/files.txt",
+   "3": "/app/code/experiments/function_calls/benchmark/benchmarkFiles.txt",
+   "4": "/app/code/tests/cFiles/C-master/CmasterFiles.txt"
    }'
 
-while read paper_num; do
-   # check if input in the list
-   # if ([[ ${paper_dict[@]} =~ (^|[[:space:]])"$paper_num"($|[[:space:]]) ]]); then
-   if [[ $paper_dict == *"$paper_num"* && "$paper_num" =~ ^[0-9]+$ ]]; then
+# Add metrics to this list
+apc_dict='"1" "2" "3" "4" "5"'
+
+# Add papers below in chronological order :)
+
+while :;do
+   printf "HELLO! WELCOME TO METRINOME. PRESS THE CORRESPONDING NUMBER TO SEE THE BENCHMARKS FROM THAT PAPER.\n\
+   1) ICSE 2021 PAPER\n\
+   2) FormaliSE 2023 PAPER\n\
+   3) ICSE 2024 POSTER\n\
+   4) ISSTA 2024 PAPER\n"
+   while read paper_num; do
+      # check if input in the list and is an integer
+      if [[ $paper_dict == *"$paper_num"* && "$paper_num" =~ ^[0-9]+$ ]]; then
+         printf "WHICH METRIC WOULD YOU LIKE TO COMPUTE? \n\
+   1) Interprocedural APC\n\
+   2) FAPC\n\
+   3) Recursive APC\n\
+   4) NPath Complexity\n\
+   5) ALL METRICS\n"
+         while read apc_num; do
+            if [[ $apc_dict == *"$apc_num"* && "$apc_num" =~ ^[0-9]+$ ]]; then
+               break
+            else
+               echo "Not a valid selection! Try Again :)"
+               continue
+            fi
+         done
+      else
+         echo "Not a valid paper! Try Again :)"
+         continue
+      fi
       break
-   else
-      echo "Not a valid paper! Try Again :)"
+   done
+
+   if [[ "$apc_num" == "1" || "$apc_num" == "5" ]]; then
+      python3 /app/code/experiments/function_calls/tests/test_getrgf.py $paper_num "$paper_dict"
+   fi
+
+   if [[ "$apc_num" == "2" || "$apc_num" == "5" ]]; then
+      python3 /app/code/experiments/function_calls/tests/test_fcapc.py $paper_num "$paper_dict"
+   fi
+
+   if [[ "$apc_num" == "3" || "$apc_num" == "5" ]]; then
+      python3 /app/code/experiments/function_calls/tests/test_rapc.py $paper_num "$paper_dict"
+   fi
+
+   if [[ "$apc_num" == "4" || "$apc_num" == "5" ]]; then
+      python3 /app/code/experiments/function_calls/tests/test_npath.py $paper_num "$paper_dict"
+   fi
+
+   if [[ "$apc_num" == "5" ]]; then
+      python3 /app/code/experiments/function_calls/tests/mergeData.py
+   fi
+
+   printf "\n\nPRESS 1 TO COMPUTE ANOTHER METRIC. OTHERWISE PRESS ANYTHING ELSE.\n"
+
+   read choice
+
+   if [[ $choice == "1" ]]; then
       continue
    fi
+   break
 done
-
-python3 /app/code/experiments/function_calls/tests/test_getrgf.py $paper_num "$paper_dict"
-# must run this in order for mergeTestResult to work
-
-# python3 /app/code/experiments/function_calls/tests/test_fcapc.py $paper_num
-
-# python3 /app/code/experiments/function_calls/tests/test_rapc.py $paper_num
-
-# python3 /app/code/experiments/function_calls/tests/test_npath.py $paper_num
-
-# python3 /app/code/experiments/function_calls/tests/mergeData.py

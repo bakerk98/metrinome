@@ -32,17 +32,17 @@ class DataCollector:
         data = pd.DataFrame({"file_name": [], "graph_name": [], "getrgfapc": [],
                              "getrgfapc_time": [], "firstHalfTime": [], "getrgfTime":[],
                              "exception": [],"exception_type": [],"case":[],'gamma':[]})
-                             
-        # if not (benchmark):
-        try:
+        
+        # this is needed if we're using Testing.sh and chooseFile.txt
+        if (path=="/app/code/chooseFile.txt"):
             with open(path) as filess:
                 filePathwithComments = [line.rstrip() for line in filess]
                 path = filePathwithComments[0].split()[0]
                 print(f"benchmark that we are testing {path}")
-        finally:
-            with open(path) as funcs: # open the first filePath in chooseFile
-                # files = ['/app/code/experiments/recursion/files/catalan-numbers-1.c' ]
-                files = [line.rstrip() for line in funcs]
+        
+        # this needs to happen no matter which script we run
+        with open(path) as funcs:
+            files = [line.rstrip() for line in funcs]
 
         for i in files:
             if i[0:1] == "*":
@@ -141,25 +141,21 @@ def notin(graph_name, funcs):
             return False
     return True
 
-def main(path) -> None:
+def main(path:str) -> None:
     """Compute metrics for many graphs."""
-    
+
     data_collector = DataCollector()
     data_collector.collect(path)
-
-    
 
 
 if __name__ == "__main__":
 
     # If arguments exist, we're using Benchmark.sh
-    try:
-        mapping = json.loads(sys.argv[2])
+    if len(sys.argv) > 1:
+        paper_dict = json.loads(sys.argv[2])
         paper_num = sys.argv[1]
-        main(mapping[paper_num])
+        main(paper_dict[paper_num])
+    
     # For Testing.sh
-    except:
+    else:
         main("/app/code/chooseFile.txt")
-
-    
-    
