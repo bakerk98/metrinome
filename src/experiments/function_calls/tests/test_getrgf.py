@@ -10,6 +10,7 @@ import time
 import os
 import sys
 from sympy import Number
+import json
 
 class DataCollector:
     """Compute and store all complexity metrics and timing data."""
@@ -26,17 +27,18 @@ class DataCollector:
 
     
 
-    def collect(self) -> None:
+    def collect(self, path: str, benchmark: bool) -> None:
         """Compute the metrics for all files and store the data."""
         data = pd.DataFrame({"file_name": [], "graph_name": [], "getrgfapc": [],
                              "getrgfapc_time": [], "firstHalfTime": [], "getrgfTime":[],
                              "exception": [],"exception_type": [],"case":[],'gamma':[]})
                              
-        with open("/app/code/chooseFile.txt") as filess:
-            filePathwithComments = [line.rstrip() for line in filess]
-            filePath = filePathwithComments[0].split()[0]
-            print(f"benchmark that we are testing {filePath}")
-        with open(filePath) as funcs: # open the first filePath in chooseFile
+        if not (benchmark):
+            with open(path) as filess:
+                filePathwithComments = [line.rstrip() for line in filess]
+                path = filePathwithComments[0].split()[0]
+                print(f"benchmark that we are testing {path}")
+        with open(path) as funcs: # open the first filePath in chooseFile
             # files = ['/app/code/experiments/recursion/files/catalan-numbers-1.c' ]
             files = [line.rstrip() for line in funcs]
 
@@ -137,11 +139,33 @@ def notin(graph_name, funcs):
             return False
     return True
 
-def main() -> None:
+def main(path) -> None:
     """Compute metrics for many graphs."""
+
+    # testing input options
+    paper_codes = {
+        0: "/app/code/chooseFile.txt", # NORMAL TEST PROCESS
+        1: "/app/code/tests/cFiles/C-master/CmasterFiles.txt", # ISSTA 2024
+        2: "/app/code/experiments/function_calls/benchmark/benchmarkFiles.txt", #ICSE 2024 POSTER
+        3: "/app/code/experiments/icse_experiment/files/files.txt" #ICSE 2021 PAPER
+    }
+
+
     data_collector = DataCollector()
-    data_collector.collect()
+
+    # handling file parsing in collect method
+    if (path == "/app/code/chooseFile.txt"):
+        data_collector.collect(path, False)
+    else:
+        data_collector.collect(path, True)
+    
 
 
 if __name__ == "__main__":
-    main()
+
+    # Check if argument exists, else set to nothing?
+    # fix for testing.sh
+    
+    mapping = json.loads(sys.argv[2])
+    paper_num = sys.argv[1]
+    main(mapping[paper_num])
