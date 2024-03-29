@@ -27,20 +27,22 @@ class DataCollector:
 
     
 
-    def collect(self, path: str, benchmark: bool) -> None:
+    def collect(self, path: str) -> None:
         """Compute the metrics for all files and store the data."""
         data = pd.DataFrame({"file_name": [], "graph_name": [], "getrgfapc": [],
                              "getrgfapc_time": [], "firstHalfTime": [], "getrgfTime":[],
                              "exception": [],"exception_type": [],"case":[],'gamma':[]})
                              
-        if not (benchmark):
+        # if not (benchmark):
+        try:
             with open(path) as filess:
                 filePathwithComments = [line.rstrip() for line in filess]
                 path = filePathwithComments[0].split()[0]
                 print(f"benchmark that we are testing {path}")
-        with open(path) as funcs: # open the first filePath in chooseFile
-            # files = ['/app/code/experiments/recursion/files/catalan-numbers-1.c' ]
-            files = [line.rstrip() for line in funcs]
+        finally:
+            with open(path) as funcs: # open the first filePath in chooseFile
+                # files = ['/app/code/experiments/recursion/files/catalan-numbers-1.c' ]
+                files = [line.rstrip() for line in funcs]
 
         for i in files:
             if i[0:1] == "*":
@@ -141,31 +143,23 @@ def notin(graph_name, funcs):
 
 def main(path) -> None:
     """Compute metrics for many graphs."""
-
-    # testing input options
-    paper_codes = {
-        0: "/app/code/chooseFile.txt", # NORMAL TEST PROCESS
-        1: "/app/code/tests/cFiles/C-master/CmasterFiles.txt", # ISSTA 2024
-        2: "/app/code/experiments/function_calls/benchmark/benchmarkFiles.txt", #ICSE 2024 POSTER
-        3: "/app/code/experiments/icse_experiment/files/files.txt" #ICSE 2021 PAPER
-    }
-
-
+    
     data_collector = DataCollector()
+    data_collector.collect(path)
 
-    # handling file parsing in collect method
-    if (path == "/app/code/chooseFile.txt"):
-        data_collector.collect(path, False)
-    else:
-        data_collector.collect(path, True)
     
 
 
 if __name__ == "__main__":
 
-    # Check if argument exists, else set to nothing?
-    # fix for testing.sh
+    # If arguments exist, we're using Benchmark.sh
+    try:
+        mapping = json.loads(sys.argv[2])
+        paper_num = sys.argv[1]
+        main(mapping[paper_num])
+    # For Testing.sh
+    except:
+        main("/app/code/chooseFile.txt")
+
     
-    mapping = json.loads(sys.argv[2])
-    paper_num = sys.argv[1]
-    main(mapping[paper_num])
+    

@@ -16,7 +16,7 @@ paper_dict='{
 while read paper_num; do
    # check if input in the list
    # if ([[ ${paper_dict[@]} =~ (^|[[:space:]])"$paper_num"($|[[:space:]]) ]]); then
-   if [[ $paper_dict == *"$paper_num"* ]]; then
+   if [[ $paper_dict == *"$paper_num"* && "$paper_num" =~ ^[0-9]+$ ]]; then
       break
    else
       echo "Not a valid paper! Try Again :)"
