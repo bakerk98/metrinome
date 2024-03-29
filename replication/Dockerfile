@@ -9,7 +9,7 @@ RUN apt install -y llvm-14
 
 # RUN apt install -y clang-6.0 llvm-6.0 llvm-6.0-dev llvm-6.0-tools zsh vim tmux
 
-# COPY src/ /app/code/
+COPY src/ /app/code/
 RUN pip install networkx
 RUN pip install pycparser
 RUN pip install mpmath

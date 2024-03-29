@@ -26,4 +26,4 @@ RUN CC=/usr/bin/clang
 WORKDIR /app/code/
 ENV PYTHON_VERSION=3.9.1
 ENV PYTHONPATH=/app/code/
-CMD ["bash"]
+# CMD ["bash"]
