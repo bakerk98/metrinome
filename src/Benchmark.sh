@@ -20,9 +20,9 @@ while :;do
       # check if input in the list and is an integer
       if [[ $paper_dict == *"$paper_num"* && "$paper_num" =~ ^[0-9]+$ ]]; then
          printf "WHICH METRIC WOULD YOU LIKE TO COMPUTE? \n\
-   1) Interprocedural APC\n\
-   2) FAPC\n\
-   3) Recursive APC\n\
+   1) APC-IP: Interprocedural APC\n\
+   2) NAPC-IP: Naive Interprocedural APC\n\
+   3) APC-R: Recursive APC\n\
    4) NPath Complexity\n\
    5) ALL METRICS\n"
          while read apc_num; do
