@@ -10,7 +10,6 @@ paper_dict='{
 apc_dict='"1" "2" "3" "4" "5"'
 
 # Add papers below in chronological order :)
-
 while :;do
    printf "HELLO! WELCOME TO METRINOME. PRESS THE CORRESPONDING NUMBER TO SEE THE BENCHMARKS FROM THAT PAPER.\n\
    1) ICSE 2021 PAPER\n\
