@@ -9,6 +9,7 @@ from typing import Union
 import time
 import os
 import sys
+import json
 from sympy import Number
 
 class DataCollector:
@@ -21,15 +22,19 @@ class DataCollector:
         self.converter = CPPConvert(log)
 
     # pylint: disable=broad-except
-    def collect(self) -> None:
+    def collect(self, path:str) -> None:
         """Compute the metrics for all files and store the data."""
         data = pd.DataFrame({"file_name": [], "graph_name": [], "npath": [], "npath_time": [],"exception": [],"exception_type": []})
-        with open("/app/code/chooseFile.txt") as filess:
-            filePathwithComments = [line.rstrip() for line in filess]
-            filePath = filePathwithComments[0].split()[0]
-            print(filePath)
-        with open(filePath) as funcs:
-            # files = ['/app/code/experiments/recursion/files/catalan-numbers-1.c' ]
+        
+        # this is needed if we're using Testing.sh and chooseFile.txt
+        if (path=="/app/code/chooseFile.txt"):
+            with open(path) as filess:
+                filePathwithComments = [line.rstrip() for line in filess]
+                path = filePathwithComments[0].split()[0]
+                print(f"benchmark that we are testing {path}")
+        
+        # this needs to happen no matter which script we run
+        with open(path) as funcs:
             files = [line.rstrip() for line in funcs]
 
         for i in files:
@@ -53,7 +58,7 @@ class DataCollector:
                 # if graph_name == 'sudoku_f2f_cfg._Z7trycellPii.dot':
                 #     new_row = {"file_name": file, "graph_name": graph.name, "rapc": 'na',
                 #            "rapc_time": 'na'}
-                #     data = data.append(new_row, ignore_index=True)
+                #     data = data._append(new_row, ignore_index=True)
                 #     data = data[["graph_name", "rapc", "rapc_time"]]
                 #     print(data[["graph_name", "rapc", "rapc_time"]])
 
@@ -65,7 +70,7 @@ class DataCollector:
                 # if graph_name == 'truncatable_primes_f2f_cfg._Z4leftii.dot':
                 #     new_row = {"file_name": file, "graph_name": graph.name, "rapc": 'na',
                 #            "rapc_time": 'na'}
-                #     data = data.append(new_row, ignore_index=True)
+                #     data = data._append(new_row, ignore_index=True)
                 #     data = data[["graph_name", "rapc", "rapc_time"]]
                 #     print(data[["graph_name", "rapc", "rapc_time"]])
 
@@ -84,7 +89,7 @@ class DataCollector:
                 if graph_name == "bubble_sort_2_cfg.bubble_sort.dot" or graph_name == "heap_sort_2_cfg.heapSort.dot":
                     new_row = {"file_name": file, "graph_name": graph.name, "npath": 'na',
                           "npath_time": 'na'}
-                    data = data.append(new_row, ignore_index=True)
+                    data = data._append(new_row, ignore_index=True)
                     data = data[["graph_name", "npath", "npath_time"]]
                     print(data[["graph_name", "npath", "npath_time"]])
                     if not os.path.exists("/app/code/experiments/function_calls/data"):
@@ -105,7 +110,7 @@ class DataCollector:
                 new_row = {"file_name": file, "graph_name": graph.name, "npath": npath,
                            "npath_time": nruntime,"exception_type": exception_type}
 
-                data = data.append(new_row, ignore_index=True)
+                data = data._append(new_row, ignore_index=True)
                 # only keep columns graph_name, npath, npath_time
                 data = data[["graph_name", "npath", "npath_time"]]
 
@@ -137,11 +142,21 @@ def notin(graph_name, funcs):
             return False
     return True
 
-def main() -> None:
+def main(path:str) -> None:
     """Compute metrics for many graphs."""
+
     data_collector = DataCollector()
-    data_collector.collect()
+    data_collector.collect(path)
 
 
 if __name__ == "__main__":
-    main()
+
+    # If arguments exist, we're using Benchmark.sh
+    if len(sys.argv) > 1:
+        paper_dict = json.loads(sys.argv[2])
+        paper_num = sys.argv[1]
+        main(paper_dict[paper_num])
+    
+    # For Testing.sh
+    else:
+        main("/app/code/chooseFile.txt")
