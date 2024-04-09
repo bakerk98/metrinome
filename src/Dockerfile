@@ -26,5 +26,6 @@ RUN CC=/usr/bin/clang
 WORKDIR /app/code/
 ENV PYTHON_VERSION=3.9.1
 ENV PYTHONPATH=/app/code/
+RUN chmod u+x Benchmark.sh
 # customize command line prompt to look nice :)
 RUN /bin/bash -c "echo \"PS1='\[\033[01;32m\]➜ \[\033[00m\] \[\033[01;36m\]\W \[\033[00m\]'\" >> /root/.bashrc "

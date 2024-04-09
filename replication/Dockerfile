@@ -1,6 +1,8 @@
 FROM ubuntu
 
 RUN apt update
+RUN apt install -y lolcat
+RUN gem install lolcat
 RUN apt install -y git
 RUN apt install -y python3
 RUN apt install -y pip
