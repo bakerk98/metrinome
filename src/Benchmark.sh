@@ -61,7 +61,7 @@ while :;do
       python3 /app/code/experiments/function_calls/tests/mergeData.py
    fi
 
-   printf "\n\nPRESS 1 TO COMPUTE ANOTHER METRIC. OTHERWISE PRESS ANYTHING ELSE.\n"
+   printf "\n\nPRESS 1 TO COMPUTE ANOTHER METRIC. OTHERWISE PRESS ANYTHING ELSE TO EXIT.\n"
 
    read choice
 
