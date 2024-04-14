@@ -39,8 +39,7 @@ class FunctionCallPathComplexity(ABC):
     def evaluate(self, cfg: ControlFlowGraph, all_cfgs: List[ControlFlowGraph]) -> Union[int, PathComplexityRes]:
         """Given a graph, compute the metric."""
         # TODO: use full name of cfg (file name is deleted here)
-        self.logger.d_msg(
-            f"RGF FCAPC =========================================================")
+        self.logger.d_msg(f"RGF FCAPC =========================================================")
         self.logger.d_msg(f"graph name:{cfg.name.split('.')[1]}")
         self.logger.d_msg(f"cfg repr:{cfg.rich_repr()}")
 
@@ -86,8 +85,7 @@ class FunctionCallPathComplexity(ABC):
         # eliminate equations into a single gamma function with variables T0 and x (gammaTime)
         gammaTime = 0.0
         start_time = time.time()
-        optimizedGamma = self.optimizedEliminate(
-            splitsystems, splitsymbols, lookupDict, idxDict)
+        optimizedGamma = self.optimizedEliminate(splitsystems, splitsymbols, lookupDict, idxDict)
         gammaTime = time.time() - start_time
         self.logger.d_msg(
             f"Gamma Function: {optimizedGamma}, time: {gammaTime}")
