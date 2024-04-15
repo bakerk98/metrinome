@@ -21,7 +21,6 @@ class DataCollector:
         self.fcn_call_apc_computer = fcn_call_path_complexity_naive.FunctionCallPathComplexity(log)
         self.converter = CPPConvert(log)
 
-    # nfcapc stands for new function call apc, which is the apc computed by fc_path_complexity_final
     # pylint: disable=broad-except
     def collect(self, path:str) -> None:
         """Compute the metrics for all files and store the data."""
@@ -49,7 +48,6 @@ class DataCollector:
             if graphs is None:
                 graphs = self.converter.to_graph(
                     os.path.splitext(file)[0], ".cpp")
-            if graphs is None:
                 print("No Graphs")
                 continue
 

@@ -45,20 +45,22 @@ class DataCollector:
             files = [line.rstrip() for line in funcs]
 
         for i in files:
+            # if the line starts with "*", ignore
             if i[0:1] == "*":
                 continue
             file = i.split()[0]
             funcs = i.split()[1:]
             print(f"Now analyzing {file}")
             graphs = self.converter.to_graph(os.path.splitext(file)[0], ".c")
-            print(graphs)
+            print(f"all graphs in this file {graphs}")
+
+            #no graphs in the file
             if graphs is None:
                 graphs = self.converter.to_graph(
                     os.path.splitext(file)[0], ".cpp")
-            if graphs is None:
                 print("No Graphs")
                 continue
-
+                
             for graph_name, graph in graphs.items():
                 print('Graph Name: ', graph_name)
                
@@ -89,20 +91,21 @@ class DataCollector:
                     print(exc)
                     exception_type = "Timeout" if isinstance(exc, TimeoutError) else "Other"
 
-                print(getrgfapc)
-                new_row = {"file_name": file, "graph_name": graph.name,  "getrgfapc": getrgfapc["rfcapc"], 
-                        "getrgfapc_time": getrgfruntime, "longest for getrgf": get_max_time(getrgfapc)[0], "longest time":get_max_time(getrgfapc)[1], 
-                        "getrgfTime":getrgfapc["getrgfTime"], "firstHalfTime": getrgfapc['firstHalfTime'],
-                        "exception_type": exception_type,'case':getrgfapc['case'],'gamma':getrgfapc['gamma']}
+                new_row = {"file_name": file, 
+                           "graph_name": graph.name,  
+                           "getrgfapc": getrgfapc["rfcapc"], 
+                           "getrgfapc_time": getrgfruntime, 
+                           "longest for getrgf": get_max_time(getrgfapc)[0], 
+                           "longest time":get_max_time(getrgfapc)[1], 
+                           "getrgfTime":getrgfapc["getrgfTime"], 
+                           "firstHalfTime": getrgfapc['firstHalfTime'],
+                           "exception_type": exception_type,
+                           'case':getrgfapc['case'],
+                           'gamma':getrgfapc['gamma']}
 
                 data = data._append(new_row, ignore_index=True)
                 # only keep columns graph_name, rapc, fcapc, num_vertices, edge_count, and runtimes
                 data = data[["graph_name", "getrgfapc", "getrgfapc_time", 'getrgfTime', 'firstHalfTime', "longest for getrgf", "longest time",'case','gamma']]
-
-                # format rapc column decimals to have at most 3 decimal places, e.g. 0.33333333n -> 0.333n
-                # data['rapc'] = data['rapc'].apply(lambda x: round_tuple_of_exprs(x, 3))
-                # print(data[['graph_name', "apc",'rapc',"rapc_time","fcapc","fcapc_time"]])
-                print(data[["graph_name", "getrgfapc", "getrgfapc_time", 'getrgfTime', 'firstHalfTime']])
 
 
                 # create directory if it doesn't exist
@@ -110,6 +113,14 @@ class DataCollector:
                     os.makedirs("/app/code/experiments/function_calls/data")
                 data.to_csv("/app/code/experiments/function_calls/data/getrgfapc_data.csv")
 
+
+                # format rapc column decimals to have at most 3 decimal places, e.g. 0.33333333n -> 0.333n
+                # data['rapc'] = data['rapc'].apply(lambda x: round_tuple_of_exprs(x, 3))
+                # print(data[['graph_name', "apc",'rapc',"rapc_time","fcapc","fcapc_time"]])
+                print(data[["graph_name", "getrgfapc", "getrgfapc_time", 'getrgfTime', 'firstHalfTime']])
+
+
+                
 
 def round_tuple_of_exprs(tup, num_digits):
     return tuple(round_expr(expr, num_digits) for expr in tup)
