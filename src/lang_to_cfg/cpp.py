@@ -40,12 +40,13 @@ class CPPConvert(converter.ConverterAbstract):
 
     def to_graph(self,
                  filename: str,
-                 file_extension: str) -> Optional[dict[str, ControlFlowGraph]]:
+                 file_extension: str,
+                 simplify: bool = False) -> Optional[dict[str, ControlFlowGraph]]:
         """Create a CFG from a C++ source file."""
         Env.make_temp()
         Env.clean_temps()
         self.logger.d_msg(f"Creating dot files for {filename}, {file_extension}")
-        self.create_dot_files(filename, file_extension)
+        self.create_dot_files(filename, file_extension, simplify)
         self.logger.d_msg("Converting to standard format")
         file_count = self.convert_to_standard_format(filename)
         self.logger.d_msg(f"File count is: {file_count}")
@@ -177,7 +178,7 @@ class CPPConvert(converter.ConverterAbstract):
 
         return len(files)
 
-    def create_dot_files(self, filepath: str, file_extension: str) -> None:
+    def create_dot_files(self, filepath: str, file_extension: str, simplify: bool = False) -> None:
         """Create a .dot file representing a CFG for each function from a .cpp file."""
         # Make sure the file extension begins with a '.'
         if file_extension[0] != '.':
@@ -200,7 +201,12 @@ class CPPConvert(converter.ConverterAbstract):
         else:
             c1_str = f"clang{'++' if file_extension == '.cpp' else ''}-14 -emit-llvm -S {filepath}{file_extension} -o-"
         # 2nd half of command: process compiled files to produce dot files using llvm
-        command = c1_str + " | /usr/lib/llvm-14/bin/opt -dot-cfg -disable-output -enable-new-pm=0"
+        if not simplify:
+            command = c1_str + " | /usr/lib/llvm-14/bin/opt -dot-cfg -disable-output -enable-new-pm=0"
+        #to use pythonBranching:
+        else: 
+            command = c1_str + " | /usr/lib/llvm-14/bin/opt -simplifycfg -dot-cfg -disable-output -enable-new-pm=0"
+
         # ============== NEW CLANG FOR RUNNING WITH DOCKER ==========================================
 
         self.logger.d_msg(f"Command: {command}")

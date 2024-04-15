@@ -51,7 +51,7 @@ class DataCollector:
             file = i.split()[0]
             funcs = i.split()[1:]
             print(f"Now analyzing {file}")
-            graphs = self.converter.to_graph(os.path.splitext(file)[0], ".c")
+            graphs = self.converter.to_graph(os.path.splitext(file)[0], ".c", True)
             print(f"all graphs in this file {graphs}")
 
             #no graphs in the file
@@ -70,22 +70,13 @@ class DataCollector:
                 if notin(graph_name, funcs):
                     continue
 
-                print("======================running getrgf fcn_call_path_complexity with branch simplification for 4000 seconds=======================")
+                print("======================running getrgf fcn_call_path_complexity with python branching for 4000 seconds=======================")
                 start_time = time.time()
                 try:
                     with Timeout(4000):
-                        getrgfapc = self.getrgf_computer.evaluate(graph, graphs)
+                        getrgfapc = self.getrgf_computer.evaluate(graph, graphs, "no branching")
                         print(getrgfapc)
                         getrgfruntime = time.time() - start_time
-                        # if "V0_3" in str(getrgfapc["rfcapc"]):
-                        #     print("ERROR V0_3 in apc")
-                        #     sys.exit()
-                        # if getrgfapc['rfcapc'] == 'na':
-                        #     print("ERROR apc didn't complete")
-                        #     sys.exit()
-                        # if str(getrgf['rfcapc']) != "0.150373068898858*1.30927065104311**n":
-                        #     print("error incorrect apc:",getrgf['rfcapc'])
-                        #     sys.exit()
                 except Exception as exc:
                     print(exc)
                     exception_type = "Timeout" if isinstance(exc, TimeoutError) else "Other"
@@ -108,9 +99,9 @@ class DataCollector:
 
 
                 # create directory if it doesn't exist
-                if not os.path.exists("/app/code/experiments/function_calls/data"):
-                    os.makedirs("/app/code/experiments/function_calls/data")
-                data.to_csv("/app/code/experiments/function_calls/data/getrgfapc_data.csv")
+                if not os.path.exists("/app/code/experiments/branch_apc/data"):
+                    os.makedirs("/app/code/experiments/branch_apc/data")
+                data.to_csv("/app/code/experiments/branch_apc/data/pythonBranch.csv")
 
 
                 # format rapc column decimals to have at most 3 decimal places, e.g. 0.33333333n -> 0.333n
