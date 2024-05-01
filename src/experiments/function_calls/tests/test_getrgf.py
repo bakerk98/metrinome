@@ -40,7 +40,6 @@ class DataCollector:
                 path = filePathwithComments[0].split()[0]
                 print(f"benchmark that we are testing {path}")
         
-        # this needs to happen no matter which script we run
         with open(path) as funcs:
             files = [line.rstrip() for line in funcs]
 

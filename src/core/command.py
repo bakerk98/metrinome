@@ -256,12 +256,15 @@ class Command:
         self.debug_mode = options.get_debug_mode()
         self.recursive_apc = options.get_recursive_apc()
         self.fc_apc = options.get_fcapc()
-        if self.recursive_apc:
-            print("It's Herald time :D")
-        elif self.fc_apc:
-            print("It's getrgf time")
-        else:
-            print("Herald is napping zzzzzzzzz")
+
+        ## Leaving this for history :)
+        
+        # if self.recursive_apc:
+        #     print("It's Herald time :D")
+        # elif self.fc_apc:
+        #     print("It's getrgf time")
+        # else:
+        #     print("Herald is napping zzzzzzzzz")
 
     def verify_file_type(self, args: str, target_type: str) -> Optional[str]:
         """

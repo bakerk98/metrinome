@@ -3,7 +3,8 @@ paper_dict='{
    "1": "/app/code/experiments/icse_experiment/files/files.txt",
    "2": "/app/code/experiments/recursion/files/files.txt",
    "3": "/app/code/experiments/function_calls/benchmark/benchmarkFiles.txt",
-   "4": "/app/code/tests/cFiles/C-master/CmasterFiles.txt"
+   "4": "/app/code/tests/cFiles/C-master/CmasterFiles.txt",
+   "5": "REPL"
    }'
 
 # Add metrics to this list
@@ -16,10 +17,15 @@ while :;do
    1) ICSE 2021 PAPER\n\
    2) FormaliSE 2023 PAPER\n\
    3) ICSE 2024 POSTER\n\
-   4) ISSTA 2024 PAPER\n"
+   4) ISSTA 2024 PAPER
+   5) I WANT THE REPLLL \n"
    while read paper_num; do
       # check if input in the list and is an integer
       if [[ $paper_dict == *"$paper_num"* && "$paper_num" =~ ^[0-9]+$ ]]; then
+         if [[ $paper_num == 5 ]]; then
+            python3 main.py
+            break
+         fi
          printf "WHICH METRIC WOULD YOU LIKE TO COMPUTE? \n\
    1) APC-IP: Interprocedural APC\n\
    2) NAPC-IP: Naive Interprocedural APC\n\
