@@ -1,4 +1,4 @@
-"""test file for new function call apc (getrgf)"""
+"""test file for branching APC, using getrgfapc"""
 from utils import Timeout
 from metric.path_complexity import PathComplexityRes
 from metric import fcn_call_path_complexity
@@ -29,9 +29,8 @@ class DataCollector:
 
     def collect(self, path: str) -> None:
         """Compute the metrics for all files and store the data."""
-        data = pd.DataFrame({"file_name": [], "graph_name": [], "noBranchingapc": [],
-                             "noBranching_time": [], "noBranchingFirstHalfTime": [], "noBranchingMathTime":[],
-                             "exception": [],"exception_type": [],"noBranchingCase":[],'noBranchingGamma':[]})
+        data = pd.DataFrame({"file_name": [], "graph_name": [], "apcWithoutBranching": [], "apcWithBranching": [], "apcWithPythonBranching": [],
+                             "withoutBranchingTime": [], "withBranchingTime": [], "withPythonBranchingTime":[]})
         
         # this is needed if we're using Testing.sh and chooseFile.txt
         if (path=="/app/code/chooseFile.txt"):
@@ -51,6 +50,8 @@ class DataCollector:
             file = i.split()[0]
             funcs = i.split()[1:]
             print(f"Now analyzing {file}")
+
+            # without pythonBranching =====================================================================================================
             graphs = self.converter.to_graph(os.path.splitext(file)[0], ".c")
             print(f"all graphs in this file {graphs}")
 
@@ -70,44 +71,61 @@ class DataCollector:
                 if notin(graph_name, funcs):
                     continue
 
-                print("======================running getrgf fcn_call_path_complexity without branching for 4000 seconds=======================")
+                print("======================running getrgf fcn_call_path_complexity without Branching for 4000 seconds=======================")
                 start_time = time.time()
                 try:
                     with Timeout(4000):
-                        getrgfapc = self.getrgf_computer.evaluate(graph, graphs, "no branching")
-                        print(getrgfapc)
-                        getrgfruntime = time.time() - start_time
+                        getrgfapc1 = self.getrgf_computer.evaluate(graph, graphs, "no branching")
+                        print(getrgfapc1)
+                        getrgfruntime1 = time.time() - start_time
+                except Exception as exc:
+                    print(exc)
+                    exception_type = "Timeout" if isinstance(exc, TimeoutError) else "Other"
+
+                print("======================running getrgf fcn_call_path_complexity with branching for 4000 seconds=======================")
+                start_time = time.time()
+                try:
+                    with Timeout(4000):
+                        getrgfapc2 = self.getrgf_computer.evaluate(graph, graphs, "branching")
+                        print(getrgfapc2)
+                        getrgfruntime2 = time.time() - start_time
+                except Exception as exc:
+                    print(exc)
+                    exception_type = "Timeout" if isinstance(exc, TimeoutError) else "Other"
+
+                print("======================running getrgf fcn_call_path_complexity with pythonBranching for 4000 seconds=======================")
+                start_time = time.time()
+                try:
+                    with Timeout(4000):
+                        getrgfapc3 = self.getrgf_computer.evaluate(graph, graphs)
+                        print(getrgfapc3)
+                        getrgfruntime3 = time.time() - start_time
                 except Exception as exc:
                     print(exc)
                     exception_type = "Timeout" if isinstance(exc, TimeoutError) else "Other"
 
                 new_row = {"file_name": file, 
                            "graph_name": graph.name,  
-                           "noBranchingapc": getrgfapc["rfcapc"], 
-                           "noBranching_time": getrgfruntime, 
-                           "(no)longest for getrgf": get_max_time(getrgfapc)[0], 
-                           "(no)longest time":get_max_time(getrgfapc)[1], 
-                           "noBranchingMathTime":getrgfapc["getrgfTime"], 
-                           "noBranchingFirstHalfTime": getrgfapc['firstHalfTime'],
-                           "exception_type": exception_type,
-                           'noBranchingCase':getrgfapc['case'],
-                           'noBranchingGamma':getrgfapc['gamma']}
-
+                           "apcWithoutBranching": getrgfapc1["rfcapc"], 
+                           "apcWithBranching": getrgfapc2["rfcapc"],
+                           "apcWithPythonBranching": getrgfapc3["rfcapc"],
+                           "withoutBranchingTime": getrgfruntime1, 
+                           "withBranchingTime": getrgfruntime2, 
+                           "withPythonBranchingTime": getrgfruntime3}
+                
                 data = data._append(new_row, ignore_index=True)
-                # only keep columns graph_name, rapc, fcapc, num_vertices, edge_count, and runtimes
-                data = data[["graph_name", "noBranchingapc", "noBranching_time", 'noBranchingMathTime', 'noBranchingFirstHalfTime', "(no)longest for getrgf", "(no)longest time",'noBranchingCase','noBranchingGamma']]
+                data = data[["graph_name",  "apcWithoutBranching", "apcWithBranching", "apcWithPythonBranching",
+                           "withoutBranchingTime", "withBranchingTime", "withPythonBranchingTime"]]
 
 
                 # create directory if it doesn't exist
-                if not os.path.exists("/app/code/experiments/branch_apc/data"):
-                    os.makedirs("/app/code/experiments/branch_apc/data")
-                data.to_csv("/app/code/experiments/branch_apc/data/noBranching_data.csv")
+                data.to_csv("/app/code/experiments/branch_apc/branching_data.csv")
 
 
                 # format rapc column decimals to have at most 3 decimal places, e.g. 0.33333333n -> 0.333n
                 # data['rapc'] = data['rapc'].apply(lambda x: round_tuple_of_exprs(x, 3))
                 # print(data[['graph_name', "apc",'rapc',"rapc_time","fcapc","fcapc_time"]])
-                print(data[["graph_name", "noBranchingapc", "noBranching_time", 'noBranchingMathTime', 'noBranchingFirstHalfTime']])
+                print(data)
 
 
                 

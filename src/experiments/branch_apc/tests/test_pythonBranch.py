@@ -29,9 +29,9 @@ class DataCollector:
 
     def collect(self, path: str) -> None:
         """Compute the metrics for all files and store the data."""
-        data = pd.DataFrame({"file_name": [], "graph_name": [], "getrgfapc": [],
-                             "getrgfapc_time": [], "firstHalfTime": [], "getrgfTime":[],
-                             "exception": [],"exception_type": [],"case":[],'gamma':[]})
+        data = pd.DataFrame({"file_name": [], "graph_name": [], "pythonBranchingAPC": [],
+                             "pythonBranching_time": [], "pythonBranchingFirstHalfTime": [], "pythonBranchingMathTime":[],
+                             "exception": [],"exception_type": [],"pythonBranchingCase":[],'pythonBranchingGamma':[]})
         
         # this is needed if we're using Testing.sh and chooseFile.txt
         if (path=="/app/code/chooseFile.txt"):
@@ -56,7 +56,7 @@ class DataCollector:
 
             #no graphs in the file
             if graphs is None:
-                graphs = self.converter.to_graph(os.path.splitext(file)[0], ".cpp")
+                graphs = self.converter.to_graph(os.path.splitext(file)[0], ".cpp", True)
                 print("No Graphs")
                 continue
                 
@@ -83,19 +83,19 @@ class DataCollector:
 
                 new_row = {"file_name": file, 
                            "graph_name": graph.name,  
-                           "getrgfapc": getrgfapc["rfcapc"], 
-                           "getrgfapc_time": getrgfruntime, 
-                           "longest for getrgf": get_max_time(getrgfapc)[0], 
-                           "longest time":get_max_time(getrgfapc)[1], 
-                           "getrgfTime":getrgfapc["getrgfTime"], 
-                           "firstHalfTime": getrgfapc['firstHalfTime'],
+                           "pythonBranchingAPC": getrgfapc["rfcapc"], 
+                           "pythonBranching_time": getrgfruntime, 
+                           "(python)longest for getrgf": get_max_time(getrgfapc)[0], 
+                           "(python)longest time":get_max_time(getrgfapc)[1], 
+                           "pythonBranchingMathTime":getrgfapc["getrgfTime"], 
+                           "pythonBranchingFirstHalfTime": getrgfapc['firstHalfTime'],
                            "exception_type": exception_type,
-                           'case':getrgfapc['case'],
-                           'gamma':getrgfapc['gamma']}
+                           'pythonBranchingCase':getrgfapc['case'],
+                           'pythonBranchingGamma':getrgfapc['gamma']}
 
                 data = data._append(new_row, ignore_index=True)
                 # only keep columns graph_name, rapc, fcapc, num_vertices, edge_count, and runtimes
-                data = data[["graph_name", "getrgfapc", "getrgfapc_time", 'getrgfTime', 'firstHalfTime', "longest for getrgf", "longest time",'case','gamma']]
+                data = data[["graph_name", "pythonBranchingAPC", "pythonBranching_time", 'pythonBranchingMathTime', 'pythonBranchingFirstHalfTime', "(python)longest for getrgf", "(python)longest time",'pythonBranchingCase','pythonBranchingGamma']]
 
 
                 # create directory if it doesn't exist
@@ -107,7 +107,7 @@ class DataCollector:
                 # format rapc column decimals to have at most 3 decimal places, e.g. 0.33333333n -> 0.333n
                 # data['rapc'] = data['rapc'].apply(lambda x: round_tuple_of_exprs(x, 3))
                 # print(data[['graph_name', "apc",'rapc',"rapc_time","fcapc","fcapc_time"]])
-                print(data[["graph_name", "getrgfapc", "getrgfapc_time", 'getrgfTime', 'firstHalfTime']])
+                print(data[["graph_name", "pythonBranchingAPC", "pythonBranching_time", 'pythonBranchingMathTime', 'pythonBranchingFirstHalfTime']])
 
 
                 

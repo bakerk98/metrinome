@@ -205,6 +205,7 @@ class CPPConvert(converter.ConverterAbstract):
             command = c1_str + " | /usr/lib/llvm-14/bin/opt -dot-cfg -disable-output -enable-new-pm=0"
         #to use pythonBranching:
         else: 
+            print("with '-simplifycfg' flag")
             command = c1_str + " | /usr/lib/llvm-14/bin/opt -simplifycfg -dot-cfg -disable-output -enable-new-pm=0"
 
         # ============== NEW CLANG FOR RUNNING WITH DOCKER ==========================================
