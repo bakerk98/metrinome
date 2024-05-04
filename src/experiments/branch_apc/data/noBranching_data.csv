@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ,graph_name,noBranchingapc,noBranching_time,noBranchingMathTime,noBranchingFirstHalfTime,(no)longest for getrgf,(no)longest time,noBranchingCase,noBranchingGamma
 0,bead_sort_.bead_sort,0.369749676356311*1.29646623878369**n,5.233794450759888,0.10276222229003906,4.233521938323975,gammaTime,4.207,1.0,-T0 + x**2*(x**16 - 3*x**13 + 3*x**10 - x**7)/(x**19 + x**17 + x**15 + x**14 + 3*x**13 + 2*x**12 + 2*x**11 - 2*x**10 - 3*x**9 - 5*x**8 - x**7 - 2*x**6 + 2*x**5 + x**4 + 3*x**3 - 1)
 1,binary_insertion_sort_.insertionSort,0.104279433436291*1.31757057715522**n,0.9183306694030762,0.06048846244812012,0.5639870166778564,gammaTime,0.557,1.0,(-T0*(x**9*(2*x + 1) - (x**2 - 1)*(2*x**5 - 1)) - x**3*(x**2 - 1)*(2*x**5 - 1))/(x**9*(2*x + 1) - (x**2 - 1)*(2*x**5 - 1))
@@ -78,3 +79,7 @@
 76,even_odd_f2f_.is_even,0.333333333333333*1.0**n*n,0.16390275955200195,0.010928153991699219,0.08011031150817871,gammaTime,0.078,1.0,-T0 + x**3*(x**3*(T0 + 1) + 1)
 77,palindrome_recursive_.palindrome_r,0.5*1.0**n*n,0.13591623306274414,0.009857654571533203,0.059487104415893555,genFuncTime,0.062,1.0,-T0 + x**3*(x*(T0 + 1) + 1)
 78,partition_f2f_.partition,0.723606797749937*1.12783848556168**n,0.4654855728149414,0.06331729888916016,0.2002568244934082,gammaTime,0.196,1.0,(-T0*(x**8 + x**4 - 1) - x**6)/(x**8 + x**4 - 1)
+=======
+,graph_name,getrgfapc,getrgfapc_time,getrgfTime,firstHalfTime,longest for getrgf,longest time,case,gamma
+0,even_odd_f2f_.is_even,0.333333333333333*1.0**n*n,0.2437725067138672,0.014251708984375,0.15067291259765625,gammaTime,0.133,1.0,-T0 + x**3*(x**3*(T0 + 1) + 1)
+>>>>>>> 32bb635a8e107886681a06695a7d30e446d92c16
