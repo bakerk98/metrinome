@@ -301,7 +301,7 @@ class Command:
         if (result := self.verify_file_type(file_name, "ktest")) is None:
             return
 
-        path_to_klee_build_dir = '/app/build'
+        path_to_klee_build_dir = 'app/build'
         command_one = 'export LD_LIBRARY_PATH={path_to_klee_build_dir}/lib/:$LD_LIBRARY_PATH'
         command_two = "gcc -I ../../include -L path-to-klee-build-dir/lib/ get_sign.c -lkleeRuntest"
 
@@ -791,7 +791,7 @@ class Command:
                 self.logger.d_msg("FILE CONTENTS")
                 self.logger.d_msg(file.read().decode())
 
-                cmd = f"clang-6.0 -I /app/klee/include -emit-llvm -c -g\
+                cmd = f"/usr/lib/llvm/19/bin/clang-19 -I app/klee/include -emit-llvm -c -g\
                         -O0 -Xclang -disable-O0-optnone  -o /dev/stdout {file.name}"
                 res = subprocess.run(cmd, shell=True, capture_output=True, check=True)
                 self.data.bc_files[f_name] = res.stdout
@@ -880,7 +880,7 @@ class Command:
             self.logger.d_msg(f"Obtained {files}")
 
             for _ in files:
-                cmd = f"/app/build/bin/klee {result}"
+                cmd = f"app/build/bin/klee {result}"
                 self.logger.d_msg(cmd)
                 start_time = time.time()
                 res = subprocess.run(cmd, shell=True, capture_output=True, check=True)
@@ -904,7 +904,7 @@ class Command:
                 file.write(self.data.bc_files[key])
                 file.seek(0)
 
-                cmd = "/app/build/bin/klee --max-time=30s " + \
+                cmd = "app/build/bin/klee --max-time=30s " + \
                       "--dump-states-on-halt=false " + \
                       f"{' '.join(extra_args)} {file.name}"
                 self.logger.d_msg(f"Going to execute {cmd}")
@@ -939,7 +939,7 @@ class Command:
         Usage:
         save <type> <name>
         """
-        subprocess.check_call(["mkdir", "-p", "/app/code/exports"])
+        subprocess.check_call(["mkdir", "-p", "app/code/exports"])
         export_type = ObjTypes.get_type(export_typename)
         if export_type is None:
             self.logger.e_msg("Unrecognized type.")

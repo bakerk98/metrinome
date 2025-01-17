@@ -41,7 +41,7 @@ def main() -> None:
     files_to_inline = ['test-40-un-inlined.c']
 
     for file in files_to_inline:
-        in_lining(f"/app/code/tests/cFiles/inlining_tests/{file}")
+        in_lining(f"app/code/tests/cFiles/inlining_tests/{file}")
 
 
 if __name__ == "__main__":

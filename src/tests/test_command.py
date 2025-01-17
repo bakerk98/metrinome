@@ -41,7 +41,7 @@ class TestCommandMultithreading(unittest.TestCase):
     def test_init(self) -> None:
         """Test the initialization with multithreading."""
         with captured_output() as (out, err):
-            repl_options = REPLOptions("/app/code", False, False, True)
+            repl_options = REPLOptions("app/code", False, False, True)
             command.Command(repl_options, None)
         expected_msg = "MULTITHREADING ENABLED"
         self.assertTrue(expected_msg in out.getvalue())
@@ -215,7 +215,7 @@ class TestCommand(unittest.TestCase):
 
         Note that in these tests we use the Command object directly.
         """
-        repl_options = REPLOptions("/app/code/tests/dotFiles", False, False, False)
+        repl_options = REPLOptions("app/code/tests/dotFiles", False, False, False)
         self.command = command.Command(repl_options, repl_wrapper=None)
         self.opts = Options()
 
@@ -250,7 +250,7 @@ class TestCommand(unittest.TestCase):
         with captured_output() as (out, err):
             self.command.do_pwd(self.opts)
 
-        self.assertTrue("/app/code/tests/dotFiles" in out.getvalue())
+        self.assertTrue("app/code/tests/dotFiles" in out.getvalue())
 
         with captured_output() as (out, err):
             self.command.do_ls(self.opts)
@@ -259,12 +259,12 @@ class TestCommand(unittest.TestCase):
         self.assertTrue(all(check_file in out.getvalue() for check_file in expected_files))
 
         with captured_output() as (out, err):
-            self.command.do_cd(self.opts, "/app/code/tests/")
+            self.command.do_cd(self.opts, "app/code/tests/")
             out.truncate(0)
             out.seek(0)
             self.command.do_pwd(self.opts)
 
-        self.assertTrue("/app/code/tests" in out.getvalue())
+        self.assertTrue("app/code/tests" in out.getvalue())
         self.assertTrue(len(err.getvalue()) == 0)
 
         # self.command.do_mkdir("")

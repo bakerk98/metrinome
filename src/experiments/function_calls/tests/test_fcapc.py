@@ -27,7 +27,7 @@ class DataCollector:
         data = pd.DataFrame({"file_name": [], "graph_name": [], "fcapc": [], "fcapc_time": [], 'naiveMathTime':[], 'firstHalfTime':[], "exception": [],"exception_type": []})
         
         # this is needed if we're using Testing.sh and chooseFile.txt
-        if (path=="/app/code/chooseFile.txt"):
+        if (path=="app/code/chooseFile.txt"):
             with open(path) as filess:
                 filePathwithComments = [line.rstrip() for line in filess]
                 path = filePathwithComments[0].split()[0]
@@ -67,9 +67,9 @@ class DataCollector:
                     data = data._append(new_row, ignore_index=True)
                     data = data[["graph_name", "fcapc", "fcapc_time", "naiveMathTime", 'firstHalfTime']]
                     print(data[["graph_name", "fcapc", "fcapc_time", "naiveMathTime", 'firstHalfTime']])
-                    if not os.path.exists("/app/code/experiments/function_calls/data"):
-                        os.makedirs("/app/code/experiments/function_calls/data")
-                        data.to_csv("/app/code/experiments/function_calls/data/fcapc_data.csv")
+                    if not os.path.exists("app/code/experiments/function_calls/data"):
+                        os.makedirs("app/code/experiments/function_calls/data")
+                        data.to_csv("app/code/experiments/function_calls/data/fcapc_data.csv")
                     continue
 
                 print("=========================runing old function call path complexity for 6000 seconds==========================")
@@ -98,9 +98,9 @@ class DataCollector:
 
 
                 # create directory if it doesn't exist
-                if not os.path.exists("/app/code/experiments/function_calls/data"):
-                    os.makedirs("/app/code/experiments/function_calls/data")
-                data.to_csv("/app/code/experiments/function_calls/data/fcapc_data.csv")
+                if not os.path.exists("app/code/experiments/function_calls/data"):
+                    os.makedirs("app/code/experiments/function_calls/data")
+                data.to_csv("app/code/experiments/function_calls/data/fcapc_data.csv")
 
 
 def round_tuple_of_exprs(tup, num_digits):
@@ -148,4 +148,4 @@ if __name__ == "__main__":
     
     # For Testing.sh
     else:
-        main("/app/code/chooseFile.txt")
+        main("app/code/chooseFile.txt")

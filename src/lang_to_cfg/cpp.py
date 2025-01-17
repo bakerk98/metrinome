@@ -135,7 +135,7 @@ class CPPConvert(converter.ConverterAbstract):
 
         # Make a temporary file (with the new content).
         source_name = os.path.basename(filename)
-        # file:/app/code/tmp/cfg._Z7mul_invii.dot
+        # file:app/code/tmp/cfg._Z7mul_invii.dot
         f_name = os.path.basename(file)
         # f_name: cfg._Z7mul_invii.dot
         # with open(Env.TMP_DOT_PATH + "/" + source_name + "_" + f_name, 'w') as new_file:
@@ -197,16 +197,16 @@ class CPPConvert(converter.ConverterAbstract):
         # ============== NEW CLANG FOR RUNNING WITH DOCKER ==========================================
         # 1st part of command: compile c files with clang
         if self._optimize:
-            c1_str = f"clang{'++' if file_extension == '.cpp' else ''}-14 -emit-llvm -S -O3 {filepath}{file_extension} -o-"
+            c1_str = f"/usr/lib/llvm/19/bin/clang-{'++' if file_extension == '.cpp' else ''}-19 -emit-llvm -S -O3 {filepath}{file_extension} -o-"
         else:
-            c1_str = f"clang{'++' if file_extension == '.cpp' else ''}-14 -emit-llvm -S {filepath}{file_extension} -o-"
+            c1_str = f"/usr/lib/llvm/19/bin/clang{'++' if file_extension == '.cpp' else ''}-19 -emit-llvm -S {filepath}{file_extension} -o-"
         # 2nd half of command: process compiled files to produce dot files using llvm
         if not simplify:
-            command = c1_str + " | /usr/lib/llvm-14/bin/opt -dot-cfg -disable-output -enable-new-pm=0"
+            command = c1_str + " | /usr/lib/llvm/17/bin/opt -disable-output -p dot-cfg"
         #to use pythonBranching:
         else: 
             print("with '-simplifycfg' flag")
-            command = c1_str + " | /usr/lib/llvm-14/bin/opt -simplifycfg -dot-cfg -disable-output -enable-new-pm=0"
+            command = c1_str + " | /usr/lib/llvm/17/bin/opt -disable-output -p simplifycfg,dot-cfg"
 
         # ============== NEW CLANG FOR RUNNING WITH DOCKER ==========================================
 

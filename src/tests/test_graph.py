@@ -110,9 +110,9 @@ class TestGraph(unittest.TestCase):
         graph = EdgeListGraph([[0, 1], [1, 2], [1, 3], [3, 4], [3, 5],
                                [2, 7], [4, 6], [5, 6], [6, 7]], 8)
         dot = graph.dot()
-        with open("/app/code/tests/dotFiles/dotTest.dot", "w+") as file:
+        with open("app/code/tests/dotFiles/dotTest.dot", "w+") as file:
             file.write(dot)
-        frmfile = CFG.from_file("/app/code/tests/dotFiles/dotTest.dot",
+        frmfile = CFG.from_file("app/code/tests/dotFiles/dotTest.dot",
                                 graph_type=EdgeListGraph)
         self.assertEqual(frmfile.graph, graph)
 
@@ -239,7 +239,7 @@ class TestGraph(unittest.TestCase):
     def test_from_file_one_vertex(self) -> None:
         """Test if we can get the adjacency list for a graph with no edges."""
         expected = EdgeListGraph(cast(EdgeListType, []), 2)
-        cfg = CFG.from_file("/app/code/tests/dotFiles/testsimple.dot",
+        cfg = CFG.from_file("app/code/tests/dotFiles/testsimple.dot",
                             graph_type=EdgeListGraph)
         self.assertEqual(expected, cfg.graph)
         # Graph.fromFile(None)
@@ -248,7 +248,7 @@ class TestGraph(unittest.TestCase):
         """Test if we can get the adjacency list for a graph with many edges and vertices."""
         expected = EdgeListGraph([[0, 1], [1, 2], [1, 3], [3, 4], [3, 5],
                                   [2, 7], [4, 6], [5, 6], [6, 7]], 8)
-        cfg = CFG.from_file("/app/code/tests/dotFiles/testgraph.dot",
+        cfg = CFG.from_file("app/code/tests/dotFiles/testgraph.dot",
                             graph_type=EdgeListGraph)
         self.assertEqual(expected, cfg.graph)
 

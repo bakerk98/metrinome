@@ -42,7 +42,7 @@ class TestJavaConvert(unittest.TestCase):
     #     self.assertTrue(converter.name() == "Java")
 
     #     Env.clean_temps()
-    #     base_path = "/app/examples/src/apache_commons/bins/commons-math3-3.4.1"
+    #     base_path = "app/examples/src/apache_commons/bins/commons-math3-3.4.1"
     #     filename = "commons-math3-3.4.1"
     #     res = converter.to_graph(f"{base_path}/{filename}", ".jar")
     #     self.assertTrue(len(os.listdir(Env.TMP_PATH)) == 0)
@@ -51,8 +51,8 @@ class TestJavaConvert(unittest.TestCase):
     #     if res is not None:
     #         self.assertTrue(len(list(res.keys())) != 0)
 
-    #     # converter.to_graph("/app/code/", ".class")
-    #     # converter.to_graph("/app/code/", ".java")
+    #     # converter.to_graph("app/code/", ".class")
+    #     # converter.to_graph("app/code/", ".java")
 
     def test_single_file(self) -> None:
         """Test that converting a single .class file to a graph."""
@@ -60,7 +60,7 @@ class TestJavaConvert(unittest.TestCase):
         self.assertTrue(converter.name() == "Java")
 
         Env.clean_temps()
-        base_path = "/app/code/tests/javaFiles"
+        base_path = "app/code/tests/javaFiles"
         filename = "Factorial"
         res = converter.to_graph(f"{base_path}/{filename}", ".class")
         self.assertTrue(len(os.listdir(Env.TMP_PATH)) == 0)

@@ -184,7 +184,7 @@ def regression(data_x: np.ndarray, data_y: np.ndarray, name: str) -> None:
     plt.plot(xd2, func_to_optimize(xd2, *fit_res), "b")
     plt.legend(["it's a graph", f"Line 1: {fit_res[0: num_params + 1]}",
                 f"Line 2: {fit_res[num_params + 1:]}"])
-    root_dir = "/app/code/tests/cFiles/fse_2020_benchmark/"
+    root_dir = "app/code/tests/cFiles/fse_2020_benchmark/"
     plt.savefig((f"{root_dir}autobpgraphs/{name}").replace("%", "percent"))
     plt.close()
 
@@ -197,7 +197,7 @@ def main() -> None:
     that minimize the loss.
     """
     subprocess.run(
-        "mkdir /app/code/tests/cFiles/fse_2020_benchmark/autobpgraphs/", shell=True, check=False)
+        "mkdir app/code/tests/cFiles/fse_2020_benchmark/autobpgraphs/", shell=True, check=False)
     functions = ['01_greatestof3', '13_check_arrays_equal', '22_selectionsort', '02_fib',
                  '14_lexicographic_array_compare', '23_mergesort', '03_sign',
                  '15_check_heap_order', '04_prime', '16_binary_search', '25_heapsort', '05_parity',
@@ -207,7 +207,7 @@ def main() -> None:
                  '21_insertionsort', '51_variance']
     field = "CompletedPaths"
     for func in functions:
-        data = pd.read_csv(f"/app/code/tests/cFiles/fse_2020_benchmark/frames/{func}.csv")
+        data = pd.read_csv(f"app/code/tests/cFiles/fse_2020_benchmark/frames/{func}.csv")
         data_x = np.array([float(i.split()[2]) for i in data.iloc[:, 0]])
         data_y = np.array(data[field])
         regression(data_x, data_y, f"{field}_{func}")

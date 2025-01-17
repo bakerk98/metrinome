@@ -57,7 +57,7 @@ def main() -> None:
     files_to_inline = ['04_prime_helper.c']
 
     for file in files_to_inline:
-        in_lining(f"/app/code/tests/cFiles/in_lining_tests_on_fse/{file}")
+        in_lining(f"app/code/tests/cFiles/in_lining_tests_on_fse/{file}")
 
 
 if __name__ == "__main__":

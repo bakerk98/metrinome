@@ -25,12 +25,12 @@ class DataCollector:
     def collect(self) -> None:
         """Compute the metrics for all files and store the data."""
         data = pd.DataFrame({"file_name": [], "graph_name": [], "apc": [], "apc_time": [],"exception": [],"exception_type": []})
-        with open("/app/code/chooseFile.txt") as filess:
+        with open("app/code/chooseFile.txt") as filess:
             filePathwithComments = [line.rstrip() for line in filess]
             filePath = filePathwithComments[0].split()[0]
             print(filePath)
         with open(filePath) as funcs:
-            # files = ['/app/code/experiments/recursion/files/catalan-numbers-1.c' ]
+            # files = ['app/code/experiments/recursion/files/catalan-numbers-1.c' ]
             files = [line.rstrip() for line in funcs]
 
         for i in files:
@@ -80,9 +80,9 @@ class DataCollector:
 
 
                 # create directory if it doesn't exist
-                if not os.path.exists("/app/code/experiments/function_calls/data"):
-                    os.makedirs("/app/code/experiments/function_calls/data")
-                data.to_csv("/app/code/experiments/function_calls/data/apc_data.csv")
+                if not os.path.exists("app/code/experiments/function_calls/data"):
+                    os.makedirs("app/code/experiments/function_calls/data")
+                data.to_csv("app/code/experiments/function_calls/data/apc_data.csv")
 
 
 def round_tuple_of_exprs(tup, num_digits):

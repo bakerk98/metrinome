@@ -22,7 +22,7 @@ class FileSorter:
         """Create a new instance of the data collector."""
         log = Log()
         self.converter = CPPConvert(log)
-        self.base_path = "/app/code/experiments/recursion"
+        self.base_path = "app/code/experiments/recursion"
 
     # pylint: disable=broad-except
     def sort(self) -> None:
@@ -111,7 +111,7 @@ class FileSorter:
         #                    "exception_type": exception_type}
         #
         #         data = data.append(new_row, ignore_index=True)
-        #         data.to_csv(f"/app/code/experiments/recursion/data/recursiveData.csv")
+        #         data.to_csv(f"app/code/experiments/recursion/data/recursiveData.csv")
 
 def main() -> None:
     """Compute metrics for many graphs."""

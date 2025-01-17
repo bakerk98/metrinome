@@ -21,7 +21,7 @@ class TestCPPConvert(unittest.TestCase):
         self.assertEqual(converter.name(), "CPP")
         Env.clean_temps()
         graph1 = EdgeListGraph([[0, 1], [1, 2]], 3)
-        result = converter.to_graph("/app/code/tests/cppFiles/blank", ".cpp")
+        result = converter.to_graph("app/code/tests/cppFiles/blank", ".cpp")
         self.assertTrue(len(os.listdir(Env.TMP_DOT_PATH)) == 0)
         self.assertTrue(len(os.listdir(Env.TMP_PATH)) == 0)
         self.assertIsNotNone(result)
@@ -30,7 +30,7 @@ class TestCPPConvert(unittest.TestCase):
             self.assertEqual(graph1, result['blank_cfg.main.dot'].graph)
 
         expected_graph = ControlFlowGraph(get_test_graph())
-        graphs = converter.to_graph("/app/code/tests/cppFiles/names", ".cpp")
+        graphs = converter.to_graph("app/code/tests/cppFiles/names", ".cpp")
 
         # Need to check all graphs since order can vary with environment.
         graph_names = ['names_cfg.main.dot']
@@ -42,18 +42,18 @@ class TestCPPConvert(unittest.TestCase):
     # @ignore_warnings  # glob regex deprecation warnings.
     # def test_create_dot_files(self):
     #     """Test that it creates a folder for the files."""
-    #     count1 = len(glob2.glob("/app/code/tests/cppFiles/*"))
+    #     count1 = len(glob2.glob("app/code/tests/cppFiles/*"))
     #     converter = CPPConvert(Log())
-    #     converter.create_dot_files("/app/code/tests/cppFiles/blank", ".cpp")
-    #     count2 = len(glob2.glob("/app/code/tests/cppFiles/*"))
+    #     converter.create_dot_files("app/code/tests/cppFiles/blank", ".cpp")
+    #     count2 = len(glob2.glob("app/code/tests/cppFiles/*"))
     #     self.assertEqual(count1 + 1, count2)
 
-    #     temp_folder = "/app/code/tests/cppFiles/cppConverterTemps"
-    #     orig_dir = glob2.glob("/app/code/tests/cppFiles/*")
+    #     temp_folder = "app/code/tests/cppFiles/cppConverterTemps"
+    #     orig_dir = glob2.glob("app/code/tests/cppFiles/*")
     #     self.assertIn(temp_folder, orig_dir)
 
     #     # Affirm that dot files are indeed inside the folder
-    #     temp_contents = glob2.glob("/app/code/tests/cppFiles/cppConverterTemps/*.dot")
+    #     temp_contents = glob2.glob("app/code/tests/cppFiles/cppConverterTemps/*.dot")
     #     self.assertNotEqual(len(temp_contents), 0)
     #     converter.clean_temps()
 
@@ -66,7 +66,7 @@ class TestCPPConvert(unittest.TestCase):
     #         subprocess.check_call(["mkdir", "-p", "cppConverterTemps"])
     #         subprocess.call(["cp", "nonStandardFormat.txt",
     #                          "cppConverterTemps/nonStandardFormat.dot"])
-    #         converter.convert_to_standard_format("/app/code/tests/cppFiles/nonStandardFormat")
+    #         converter.convert_to_standard_format("app/code/tests/cppFiles/nonStandardFormat")
     #         with open("cppConverterTemps/nonStandardFormat0.dot", "r") as converted_format:
     #             self.assertEqual(standard_format.readlines(), converted_format.readlines())
     #     converter.clean_temps()
@@ -77,11 +77,11 @@ class TestCPPConvert(unittest.TestCase):
     #     converter = CPPConvert(None)
     #     # Create temp directory
     #     subprocess.check_call(["mkdir", "-p", "cppConverterTemps"])
-    #     temp_folder = "/app/code/tests/cppConverterTemps"
-    #     orig_dir = glob2.glob("/app/code/tests/*")
+    #     temp_folder = "app/code/tests/cppConverterTemps"
+    #     orig_dir = glob2.glob("app/code/tests/*")
     #     self.assertIn(temp_folder, orig_dir)
     #     converter.clean_temps()
-    #     orig_dir = glob2.glob("/app/code/tests/*")
+    #     orig_dir = glob2.glob("app/code/tests/*")
     #     self.assertNotIn(temp_folder, orig_dir)
 
 

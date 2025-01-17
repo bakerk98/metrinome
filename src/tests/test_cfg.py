@@ -26,9 +26,9 @@ class TestControlFlowGraph(unittest.TestCase):
         """Check that we can generate a dot file for a Graph."""
         graph = get_test_graph()
         dot = graph.dot()
-        with open("/app/code/tests/dotFiles/dotTest.dot", "w+") as file:
+        with open("app/code/tests/dotFiles/dotTest.dot", "w+") as file:
             file.write(dot)
-        frmfile = CFG.from_file("/app/code/tests/dotFiles/dotTest.dot",
+        frmfile = CFG.from_file("app/code/tests/dotFiles/dotTest.dot",
                                 graph_type=EdgeListGraph)
         self.assertEqual(frmfile.graph, graph)
 
@@ -36,14 +36,14 @@ class TestControlFlowGraph(unittest.TestCase):
     def test_from_file_one_vertex(self) -> None:
         """Test if we can get the adjacency list for a graph with no edges."""
         expected = EdgeListGraph(cast(EdgeListType, []), 2)
-        cfg = CFG.from_file("/app/code/tests/dotFiles/testsimple.dot",
+        cfg = CFG.from_file("app/code/tests/dotFiles/testsimple.dot",
                             graph_type=EdgeListGraph)
         self.assertEqual(expected, cfg.graph)
 
     def test_from_file_normal_graph(self) -> None:
         """Test if we can get the adjacency list for a graph with many edges and vertices."""
         expected = get_test_graph()
-        cfg = CFG.from_file("/app/code/tests/dotFiles/testgraph.dot",
+        cfg = CFG.from_file("app/code/tests/dotFiles/testgraph.dot",
                             graph_type=EdgeListGraph)
         self.assertEqual(expected, cfg.graph)
 

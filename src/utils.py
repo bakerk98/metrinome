@@ -164,7 +164,7 @@ def show_func_defs(filename: str) -> Dict[str, str]:
     """Return a list of the functions defined in a file."""
     # pylint: disable=unidiomatic-typecheck
     ast = parse_file(filename, use_cpp=True,
-                     cpp_args=r'-I/app/pycparser/utils/fake_libc_include')
+                     cpp_args=r'-Iapp/pycparser/utils/fake_libc_include')
 
     names = {}
     for i in ast:

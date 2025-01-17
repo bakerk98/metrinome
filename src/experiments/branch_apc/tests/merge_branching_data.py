@@ -2,9 +2,9 @@ import pandas as pd
 import os
 import sys
 
-branching_csv_file_path = '/app/code/experiments/function_calls/data/getrgfapc_data.csv'
-nobranching_csv_file_path ='/app/code/experiments/branch_apc/data/noBranching_data.csv'
-pythonBranching_csv_file_path ='/app/code/experiments/branch_apc/data/pythonBranch.csv'
+branching_csv_file_path = 'app/code/experiments/function_calls/data/getrgfapc_data.csv'
+nobranching_csv_file_path ='app/code/experiments/branch_apc/data/noBranching_data.csv'
+pythonBranching_csv_file_path ='app/code/experiments/branch_apc/data/pythonBranch.csv'
 
 
 if os.path.exists(branching_csv_file_path):
@@ -58,7 +58,7 @@ mergefinal.rename(columns = {'getrgfTime':'BranchingMathTime'}, inplace = True)
 
 
 
-mergefinal.to_csv("/app/code/experiments/branch_apc/data/final_branching_data.csv")
+mergefinal.to_csv("app/code/experiments/branch_apc/data/final_branching_data.csv")
 
 print('=========================printing final data table=================================')
 print(mergefinal[['graph_name',"noBranchingapc",'BranchingAPC', "pythonBranchingAPC",

@@ -68,10 +68,10 @@ class Data:
     def export_metrics(self, name: str, new_name: str) -> None:
         """Save a metric the REPL knows about to an external file."""
         if name in self.metrics:
-            with open(f"/app/code/exports/{new_name}_metrics", "w+") as file:
+            with open(f"app/code/exports/{new_name}_metrics", "w+") as file:
                 metric_value = self.metrics[name]
                 file.write(str(metric_value))
-                self.logger.i_msg(f"Made file {new_name}_metrics in /app/code/exports/")
+                self.logger.i_msg(f"Made file {new_name}_metrics in app/code/exports/")
         elif name == "*":
             data = pd.DataFrame({"graph_name": [], "apc": [],
                                  "cyclo": [], "npath": []})
@@ -81,8 +81,8 @@ class Data:
                            "cyclo": metric_value[0][1], "npath": metric_value[1][1]}
                 data = data.append(new_row, ignore_index=True)
 
-            data.to_csv("/app/code/exports/metrics.csv")
-            self.logger.i_msg("Made file metrics.csv in /app/code/exports/")
+            data.to_csv("app/code/exports/metrics.csv")
+            self.logger.i_msg("Made file metrics.csv in app/code/exports/")
         else:
             self.logger.e_msg(f"{str(ObjTypes.METRIC).capitalize()} {name} not found.")
 
@@ -90,43 +90,43 @@ class Data:
         """Save a Graph the REPL knows about to an external file."""
         if name in self.graphs:
             new_name = new_name.replace("/", "_").replace(".", "_")
-            with open(f"/app/code/exports/{new_name}.dot", "w+") as file:
+            with open(f"app/code/exports/{new_name}.dot", "w+") as file:
                 graph = self.graphs[name].graph
                 self.logger.d_msg(graph.dot())
                 file.write(graph.dot())
-                self.logger.i_msg(f"Made file {new_name}.dot in /app/code/exports/")
+                self.logger.i_msg(f"Made file {new_name}.dot in app/code/exports/")
         elif name == "*":
             for graph_name in self.graphs:
                 f_name = os.path.split(graph_name)[1]
                 f_name = f_name.replace("/", "_").replace(".", "_")
-                with open(f"/app/code/exports/{f_name}.dot", "w+") as file:
+                with open(f"app/code/exports/{f_name}.dot", "w+") as file:
                     graph = self.graphs[graph_name].graph
                     file.write(graph.dot())
-                    self.logger.i_msg(f"Made file {f_name}.dot in /app/code/exports/")
+                    self.logger.i_msg(f"Made file {f_name}.dot in app/code/exports/")
         else:
             self.logger.e_msg(f"{str(ObjTypes.GRAPH).capitalize()} {name} not found.")
 
     def export_bc(self, name: str, new_name: str) -> None:
         """Save a BC the REPL knows about to an external file."""
         if name in self.bc_files:
-            with open(f"/app/code/exports/{new_name}.bc", "wb+") as file:
+            with open(f"app/code/exports/{new_name}.bc", "wb+") as file:
                 bc_file = self.bc_files[name]
                 file.write(bc_file)
-                self.logger.i_msg(f"Made file {new_name}.bc in /app/code/exports/")
+                self.logger.i_msg(f"Made file {new_name}.bc in app/code/exports/")
         elif name == "*":
             for bc_name in self.bc_files:
-                with open(f"/app/code/exports/{bc_name}_export.bc", "wb+") as file:
+                with open(f"app/code/exports/{bc_name}_export.bc", "wb+") as file:
                     contents = self.bc_files[bc_name]
                     file.write(contents)
-                    self.logger.i_msg(f"Made file {bc_name}_export.dot in /app/code/exports/")
+                    self.logger.i_msg(f"Made file {bc_name}_export.dot in app/code/exports/")
         else:
             self.logger.e_msg(f"No {str(ObjTypes.KLEE_BC).capitalize()} {name} found.")
 
     def _export_single_klee_stat(self, name: str, new_name: str) -> None:
         """Create a new file from an existing klee stat."""
-        with open(f"/app/code/exports/{new_name}_kleestat.c", "w+") as file:
+        with open(f"app/code/exports/{new_name}_kleestat.c", "w+") as file:
             file.write(str(self.klee_stats[name]))
-            self.logger.i_msg(f"Made file {new_name}_kleestat.c in /app/code/exports/.")
+            self.logger.i_msg(f"Made file {new_name}_kleestat.c in app/code/exports/.")
 
     def export_klee_stats(self, name: str, new_name: str) -> None:
         """Save a file containing the results from KLEE."""
@@ -141,16 +141,16 @@ class Data:
     def export_klee_file(self, name: str, new_name: str) -> None:
         """Save a Klee formatted file the REPL knows about."""
         if name in self.klee_formatted_files:
-            with open(f"/app/code/exports/{new_name}_klee.c", "w+") as file:
+            with open(f"app/code/exports/{new_name}_klee.c", "w+") as file:
                 klee_file = self.klee_formatted_files[name]
                 file.write(klee_file)
-                self.logger.i_msg(f"Made file {new_name}_klee.c in /app/code/exports/.")
+                self.logger.i_msg(f"Made file {new_name}_klee.c in app/code/exports/.")
         elif name == "*":
             for klee_file in self.klee_formatted_files:
-                with open(f"/app/code/exports/{klee_file}_export_klee.c", "w+") as file:
+                with open(f"app/code/exports/{klee_file}_export_klee.c", "w+") as file:
                     file_contents = self.klee_formatted_files[klee_file]
                     file.write(file_contents)
-                    self.logger.i_msg(f"Made file {klee_file}_export_klee.c in /app/code/exports/.")
+                    self.logger.i_msg(f"Made file {klee_file}_export_klee.c in app/code/exports/.")
         else:
             self.logger.e_msg(f"No {str(ObjTypes.KLEE_FILE).capitalize()} {name} found.")
 

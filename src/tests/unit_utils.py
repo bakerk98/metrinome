@@ -45,7 +45,7 @@ class Benchmark:
                       graph_frac: int = 5, folders_frac: int = 46, timeout_threshold: int = 5
                       ) -> None:
         """Run all CFGs through the converter to create a benchmark."""
-        folders = (glob.glob("/app/examples/cfgs/apache_cfgs/*/"))
+        folders = (glob.glob("app/examples/cfgs/apache_cfgs/*/"))
         self.logger.i_msg(f"number of folders: {len(folders)}\n")
         # list of tuples for all cfgs in all folders (seconds, folder, cfg).
         overall_time_list: OverallTimeList = []

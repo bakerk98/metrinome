@@ -63,7 +63,7 @@ def parse_klee(klee_output: str) -> KleeOutputInfo:
 
 def klee_cmd(bcname: str, new_name: str) -> str:
     """Get the KLEE command as a string."""
-    return f"clang-6.0 -I /app/klee/include -emit-llvm -c -g\
+    return f"/usr/lib/llvm/19/bin/clang-19 -I app/klee/include -emit-llvm -c -g\
              -O0 -Xclang -disable-O0-optnone  -o {bcname} {new_name}"
 
 
@@ -167,9 +167,9 @@ class KleeUtils:
         """
         self._logger.d_msg(f"Going to parse file {filename}")
         if optimized:
-            cppargs = ['-O3', '-nostdinc', '-E', r'-I/app/pycparser/utils/fake_libc_include']
+            cppargs = ['-O3', '-nostdinc', '-E', r'-Iapp/pycparser/utils/fake_libc_include']
         else:
-            cppargs = ['-nostdinc', '-E', r'-I/app/pycparser/utils/fake_libc_include']
+            cppargs = ['-nostdinc', '-E', r'-Iapp/pycparser/utils/fake_libc_include']
         ast = parse_file(filename, use_cpp=True, cpp_path='gcc', cpp_args=cppargs)
         self._logger.d_msg("Going to visit functions.")
         func_visitor = FuncVisitor(self._logger)

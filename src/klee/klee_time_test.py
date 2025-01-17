@@ -27,7 +27,7 @@ def klee_compare_time(file_name: str, preferences: list[str], max_times: list[st
     results_dict = {}
     for preference in preferences:
         for max_time in max_times:
-            algs_path = "/app/code/tests/cFiles/fse_2020_benchmark/klee"
+            algs_path = "app/code/tests/cFiles/fse_2020_benchmark/klee"
             output_file = f"{algs_path}_{preference}_{max_time}_{function}_output"
             output_file = output_file.replace(" ", "_")
             results = klee_with_opts(file_name, output_file, preference, max_time, True)
@@ -48,7 +48,7 @@ def klee_compare_time(file_name: str, preferences: list[str], max_times: list[st
 def graph_stat_time(func: str, preference: str, max_times: list[str], results: KleeCompareResults,
                     field: str) -> None:
     """Create and save a graph for a certain statistic on a Klee experiment."""
-    algs_path = "/app/code/tests/cFiles/fse_2020_benchmark"
+    algs_path = "app/code/tests/cFiles/fse_2020_benchmark"
     subprocess.run(f"mkdir {algs_path}/graphs_time/", shell=True, check=False)
     fig1, ax1 = plt.subplots()
     stats = [results[(preference, i)][field] for i in max_times]

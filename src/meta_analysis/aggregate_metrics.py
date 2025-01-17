@@ -72,7 +72,7 @@ def test_analysis() -> None:
     options = REPLOptions(curr_path="", debug_mode=False, poor=False,
                           multithreaded=False,)
     command = Command(options, None)
-    command.do_convert("/app/code/tests/cFiles/*")
+    command.do_convert("app/code/tests/cFiles/*")
     command.do_metrics(Options(), "*")
     metrics_comparer = MetricsComparer(command.data.metrics)
     print(metrics_comparer.counter_dict)

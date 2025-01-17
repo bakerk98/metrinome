@@ -44,7 +44,7 @@ class TestEnv(unittest.TestCase):
 
     def test_get_output_path(self) -> None:
         """Test the get_output_path function."""
-        self.assertTrue(Env.get_output_path("/app/code/test.foo") == "/app/code/tmp_dot/test")
+        self.assertTrue(Env.get_output_path("app/code/test.foo") == "app/code/tmp_dot/test")
 
 
 if __name__ == '__main__':

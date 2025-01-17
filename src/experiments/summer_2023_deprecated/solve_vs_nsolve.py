@@ -29,7 +29,7 @@ class DataCollector:
         self.recursive_apc_computer = recursive_path_complexity.RecursivePathComplexity(log)
         self.cyclo_computer = cyclomatic_complexity.CyclomaticComplexity(log)
         self.npath_computer = npath_complexity.NPathComplexity(log)
-        self.base_path = "/app/code/experiments/function_calls/files/"
+        self.base_path = "app/code/experiments/function_calls/files/"
 
     # pylint: disable=broad-except
     def collect(self) -> None:
@@ -40,8 +40,8 @@ class DataCollector:
                              "msolve_apc": [],"msolve_pc":[],"just_msolve_runtime": [], "msolve_runtime":[],
                              "exception": [], "exception_type": [],
                               })
-        with open('/app/code/experiments/optimization/files.txt') as funcs:
-            # files = ['/app/code/experiments/recursion/files/catalan-numbers-1.c' ]
+        with open('app/code/experiments/optimization/files.txt') as funcs:
+            # files = ['app/code/experiments/recursion/files/catalan-numbers-1.c' ]
             files = [line.rstrip() for line in funcs]
         
         for file in files:
@@ -228,10 +228,10 @@ class DataCollector:
 
 
                 # create directory if it doesn't exist
-                if not os.path.exists("/app/code/experiments/optimization/data"):
-                    os.makedirs("/app/code/experiments/optimization/data")
+                if not os.path.exists("app/code/experiments/optimization/data"):
+                    os.makedirs("app/code/experiments/optimization/data")
                 data.to_csv(
-                    "/app/code/experiments/optimization/data/solvevsNsolveData.csv")
+                    "app/code/experiments/optimization/data/solvevsNsolveData.csv")
 
 def round_tuple_of_exprs(tup, num_digits):
     return tuple(round_expr(expr, num_digits) for expr in tup)

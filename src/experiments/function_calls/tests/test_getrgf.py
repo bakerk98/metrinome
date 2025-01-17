@@ -34,7 +34,7 @@ class DataCollector:
                              "exception": [],"exception_type": [],"case":[],'gamma':[]})
         
         # this is needed if we're using Testing.sh and chooseFile.txt
-        if (path=="/app/code/chooseFile.txt"):
+        if (path=="app/code/chooseFile.txt"):
             with open(path) as filess:
                 filePathwithComments = [line.rstrip() for line in filess]
                 path = filePathwithComments[0].split()[0]
@@ -107,9 +107,9 @@ class DataCollector:
 
 
                 # create directory if it doesn't exist
-                if not os.path.exists("/app/code/experiments/function_calls/data"):
-                    os.makedirs("/app/code/experiments/function_calls/data")
-                data.to_csv("/app/code/experiments/function_calls/data/getrgfapc_data.csv")
+                if not os.path.exists("app/code/experiments/function_calls/data"):
+                    os.makedirs("app/code/experiments/function_calls/data")
+                data.to_csv("app/code/experiments/function_calls/data/getrgfapc_data.csv")
 
 
                 # format rapc column decimals to have at most 3 decimal places, e.g. 0.33333333n -> 0.333n
@@ -167,4 +167,4 @@ if __name__ == "__main__":
     
     # For Testing.sh
     else:
-        main("/app/code/chooseFile.txt")
+        main("app/code/chooseFile.txt")

@@ -19,7 +19,7 @@ class TestPythonConvert(unittest.TestCase):
     def setUp(self) -> None:
         """Create an instance of the python converter for each test."""
         self.converter = PythonConvert(Log(display_output=False))
-        self.base_path = "/app/code/tests"
+        self.base_path = "app/code/tests"
 
     def test_expr(self) -> None:
         """

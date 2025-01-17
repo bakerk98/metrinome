@@ -26,8 +26,8 @@ class DataCollector:
         """Compute the metrics for all files and store the data."""
         data = pd.DataFrame({"file_name": [], "graph_name": [], "ogapc": [],
                      "ogapc_time": [],"exception": [], "exception_type": []})
-        with open('/app/code/experiments/optimization/files.txt') as funcs:
-            # files = ['/app/code/experiments/recursion/files/catalan-numbers-1.c' ]
+        with open('app/code/experiments/optimization/files.txt') as funcs:
+            # files = ['app/code/experiments/recursion/files/catalan-numbers-1.c' ]
 
             files = [line.rstrip() for line in funcs]
 
@@ -70,9 +70,9 @@ class DataCollector:
                 print(data[["graph_name", "ogapc","ogapc_time",'longest for og','longest time']])
 
                 # create directory if it doesn't exist
-                if not os.path.exists("/app/code/tests/data"):
-                    os.makedirs("/app/code/tests/data")
-                data.to_csv("/app/code/tests/data/ogapc_data.csv")
+                if not os.path.exists("app/code/tests/data"):
+                    os.makedirs("app/code/tests/data")
+                data.to_csv("app/code/tests/data/ogapc_data.csv")
 
 
 def round_tuple_of_exprs(tup, num_digits):

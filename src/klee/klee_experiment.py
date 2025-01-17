@@ -32,7 +32,7 @@ class KleeExperimentHandler:
                        "UserTime", "SysTime", "PythonTime"]
         self.inputs = [""]
         self.optimized = optimized
-        self.c_files_dir = "/app/code/tests/cFiles/fse_2020_benchmark"
+        self.c_files_dir = "app/code/tests/cFiles/fse_2020_benchmark"
 
     def run_experiment(self) -> None:
         """
@@ -108,7 +108,7 @@ class KleeExperimentHandler:
     def graph_stat(self, func: str, preference: str, results: KleeCompareResults,
                    results2: Optional[KleeCompareResults], field: str) -> None:
         """Create and save a graph for a certain statistic on a Klee experiment."""
-        subprocess.run("mkdir /app/code/tests/cFiles/fse_2020_benchmark/graphs/",
+        subprocess.run("mkdir app/code/tests/cFiles/fse_2020_benchmark/graphs/",
                        shell=True, check=False)
         fig1, ax1 = plt.subplots()
         depths = list(map(float, self.max_depths))
@@ -123,7 +123,7 @@ class KleeExperimentHandler:
         ax1.legend()
         ax1.grid()
 
-        algs_path = "/app/code/tests/cFiles/fse_2020_benchmark"
+        algs_path = "app/code/tests/cFiles/fse_2020_benchmark"
         fig1.savefig(f"{algs_path}/graphs/{field}_{func}.png".replace("%", "percent"))
         plt.close(fig1)
 
@@ -155,7 +155,7 @@ def main() -> None:
         max_depths = list(map(str, range(1, 21))) + list(map(str, range(30, 110, 10)))
         KleeExperimentHandler(opts, max_depths).run_experiment()
     elif sys.argv[1] == "time_test":
-        subprocess.run("mkdir /app/code/tests/cFiles/fse_2020_benchmark/frames_time/",
+        subprocess.run("mkdir app/code/tests/cFiles/fse_2020_benchmark/frames_time/",
                        shell=True, check=False)
         handler = KleeExperimentHandler("--dump-states-on-halt=false", [])
         handler.run_klee_time("32_newtons_method", list(map(str, range(1, 16))))

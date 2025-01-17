@@ -265,15 +265,18 @@ def main() -> None:
     except FileNotFoundError:
         pass
 
-    options = REPLOptions("/app/code", parsed_args.debug_mode, parsed_args.poor, parsed_args.recursive_apc, parsed_args.fcapc)
+    options = REPLOptions(".", parsed_args.debug_mode, parsed_args.poor, parsed_args.recursive_apc, parsed_args.fcapc)
     prompt = Prompt(options)
     prompt.cmdloop(f"{Colors.TITLE.value}" + r"""
 
              _        _
-  /\/\   ___| |_ _ __(_)_ __   ___  _ __ ___   ___
- /    \ / _ \ __| '__| | '_ \ / _ \| '_ ` _ \ / _ \
-/ /\/\ \  __/ |_| |  | | | | | (_) | | | | | |  __/
-\/    \/\___|\__|_|  |_|_| |_|\___/|_| |_| |_|\___|
+K
+    K
+    E
+    V
+    A
+    N
+    
 
 """ + f"{Colors.ENDC.value}\nStarting the REPL...")
 

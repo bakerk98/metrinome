@@ -11,7 +11,7 @@ class Testutils(unittest.TestCase):
     # === show_func_defs ===
     def test_show_func_defs(self) -> None:
         """Check that we can get the names of all functions in a C file."""
-        names = utils.show_func_defs("/app/code/tests/cFiles/collatz.c")
+        names = utils.show_func_defs("app/code/tests/cFiles/collatz.c")
         self.assertTrue(len(names.keys()) == 1)
         self.assertTrue(list(names.keys())[0] == "countCollatz")
 

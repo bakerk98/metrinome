@@ -24,7 +24,7 @@ class DataCollector:
         log = Log(log_level=LogLevel.DEBUG)
         # log = Log(log_level=LogLevel.REGULAR)
         self.converter = CPPConvert(log)
-        self.base_path = "/app/code/experiments/function_calls/files/"
+        self.base_path = "app/code/experiments/function_calls/files/"
 
     # nfcapc stands for new function call apc, which is the apc computed by fc_path_complexity_final
     # pylint: disable=broad-except
@@ -50,7 +50,7 @@ class DataCollector:
                              "graphProcess": [], "graphSystems": [], "gamma": [], "discrim":[], "realnroots":[], "rootsDict":[], 
                              "genFunc":[], "getrgf": [], "apc2":[],"longest":[]})
 
-        with open('/app/code/experiments/optimization/files.txt') as funcs:
+        with open('app/code/experiments/optimization/files.txt') as funcs:
             files = [line.rstrip() for line in funcs]
 
         for file in files:
@@ -244,9 +244,9 @@ class DataCollector:
 
 
                 # create directory if it doesn't exist
-                # if not os.path.exists("/app/code/experiments/optimization/data"):
-                #     os.makedirs("/app/code/experiments/optimization/data")
-                # data.to_csv("/app/code/experiments/optimization/data/finalTestData.csv")
+                # if not os.path.exists("app/code/experiments/optimization/data"):
+                #     os.makedirs("app/code/experiments/optimization/data")
+                # data.to_csv("app/code/experiments/optimization/data/finalTestData.csv")
 
 def round_tuple_of_exprs(tup, num_digits):
     return tuple(round_expr(expr, num_digits) for expr in tup)

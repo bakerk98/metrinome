@@ -10,11 +10,11 @@ class TestPathComplexity(unittest.TestCase):
 
     def test_getlines(self) -> None:
         """Smoke test for getlines in standard inlining."""
-        get_lines("/app/code/tests/cFiles/inlining_tests/test-40-un-inlined.c")
+        get_lines("app/code/tests/cFiles/inlining_tests/test-40-un-inlined.c")
 
     def test_getlines_heuristic(self) -> None:
         """Smoke test for getlines in heuristic inlining."""
-        get_lines_heuristic("/app/code/tests/cFiles/inlining_tests/test-40-un-inlined.c")
+        get_lines_heuristic("app/code/tests/cFiles/inlining_tests/test-40-un-inlined.c")
 
 
 if __name__ == '__main__':

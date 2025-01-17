@@ -22,7 +22,7 @@ class DataCollector:
         self.apc_computer = path_complexity.PathComplexity(log)
         self.cyclo_computer = cyclomatic_complexity.CyclomaticComplexity(log)
         self.npath_computer = npath_complexity.NPathComplexity(log)
-        self.base_path = "/app/code/experiments/icse_experiment/files/"
+        self.base_path = "app/code/experiments/icse_experiment/files/"
 
     # pylint: disable=broad-except
     def collect(self) -> None:
@@ -32,7 +32,7 @@ class DataCollector:
                              "num_vertices": [], "edge_count": [], "exception": [],
                              "exception_type": []})
 
-        with open('/app/code/experiments/icse_experiment/files/files.txt') as funcs:
+        with open('app/code/experiments/icse_experiment/files/files.txt') as funcs:
             files = [self.base_path + line.rstrip() for line in funcs]
 
         for file in files:
@@ -80,7 +80,7 @@ class DataCollector:
                            "exception_type": exception_type}
 
                 data = data.append(new_row, ignore_index=True)
-                data.to_csv("/app/code/experiments/icse_experiment/data/Optimized.csv")
+                data.to_csv("app/code/experiments/icse_experiment/data/Optimized.csv")
 
 
 def main() -> None:
@@ -94,11 +94,11 @@ if __name__ == "__main__":
 
 
 # """Run all CFGs through the converter to create a benchmark."""
-# files = (glob2.glob("/app/code/tests/core/separate/*"))
+# files = (glob2.glob("app/code/tests/core/separate/*"))
 
-# os.chdir("/app/code/tests/core/separate")
+# os.chdir("app/code/tests/core/separate")
 # for file in files:
 #     name = os.path.basename(file)
-#     os.chdir(f"/app/code/tests/core/separate/{name}/")
+#     os.chdir(f"app/code/tests/core/separate/{name}/")
 #     f = f".{name}.bc"
 #     subprocess.check_call(["opt", "-dot-cfg", f"{f}"])

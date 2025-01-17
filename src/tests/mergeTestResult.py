@@ -3,12 +3,12 @@ import os
 import sys
 
 
-apc_csv_file_path = '/app/code/tests/data/apc_data.csv'
-rapc_csv_file_path = '/app/code/tests/data/rapc_data.csv'
-fcapc_csv_file_path = '/app/code/tests/data/fcapc_data.csv'
-ogapc_csv_file_path = '/app/code/tests/data/ogapc_data.csv'
-nfcapc_csv_file_path = '/app/code/tests/data/nfcapc_data.csv'
-getrgfapc_csv_file_path = '/app/code/tests/data/getrgfapc_data.csv'
+apc_csv_file_path = 'app/code/tests/data/apc_data.csv'
+rapc_csv_file_path = 'app/code/tests/data/rapc_data.csv'
+fcapc_csv_file_path = 'app/code/tests/data/fcapc_data.csv'
+ogapc_csv_file_path = 'app/code/tests/data/ogapc_data.csv'
+nfcapc_csv_file_path = 'app/code/tests/data/nfcapc_data.csv'
+getrgfapc_csv_file_path = 'app/code/tests/data/getrgfapc_data.csv'
 
 if os.path.exists(getrgfapc_csv_file_path):
     getrgfapc_df = pd.read_csv(getrgfapc_csv_file_path)
@@ -84,4 +84,4 @@ print('=========================printing final data table===================')
 print(mergefinal)
 print(mergefinal[['apc','rapc','fcapc','ogapc','nfcapc','getrgfapc']])
 
-mergefinal.to_csv("/app/code/tests/data/merge_data.csv")
+mergefinal.to_csv("app/code/tests/data/merge_data.csv")

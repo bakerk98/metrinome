@@ -2,10 +2,10 @@ import pandas as pd
 import os
 import sys
 
-rapc_csv_file_path = '/app/code/experiments/function_calls/data/rapc_data.csv'
-fcapc_csv_file_path = '/app/code/experiments/function_calls/data/fcapc_data.csv'
-getrgfapc_csv_file_path = '/app/code/experiments/function_calls/data/getrgfapc_data.csv'
-npath_csv_file_path ='/app/code/experiments/function_calls/data/npath_data.csv'
+rapc_csv_file_path = 'app/code/experiments/function_calls/data/rapc_data.csv'
+fcapc_csv_file_path = 'app/code/experiments/function_calls/data/fcapc_data.csv'
+getrgfapc_csv_file_path = 'app/code/experiments/function_calls/data/getrgfapc_data.csv'
+npath_csv_file_path ='app/code/experiments/function_calls/data/npath_data.csv'
 
 if os.path.exists(getrgfapc_csv_file_path):
     getrgfapc_df = pd.read_csv(getrgfapc_csv_file_path)
@@ -75,4 +75,4 @@ print('=========================printing final data table=======================
 print(mergefinal)
 # print(mergefinal[['apc','rapc','fcapc','ogapc','nfcapc','getrgfapc']])
 
-mergefinal.to_csv("/app/code/experiments/function_calls/data/final_data.csv")
+mergefinal.to_csv("app/code/experiments/function_calls/data/final_data.csv")
