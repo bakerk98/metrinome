@@ -64,7 +64,7 @@ def parse_klee(klee_output: str) -> KleeOutputInfo:
 def klee_cmd(bcname: str, new_name: str) -> str:
     """Get the KLEE command as a string."""
     return f"/usr/lib/llvm/19/bin/clang-19 -I app/klee/include -emit-llvm -c -g\
-             -O0 -Xclang -disable-O0-optnone  -o {bcname} {new_name}"
+             -O0 -Xclang -disable-O0-optnone -o {bcname} {new_name}"
 
 
 def get_functions_list() -> list[str]:

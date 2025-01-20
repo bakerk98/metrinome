@@ -36,7 +36,7 @@ class FunctionCallPathComplexity(ABC):
         """Return the name of the metric computed by this class."""
         return "Function Call Path Complexity"
 
-    def evaluate(self, cfg: ControlFlowGraph, all_cfgs: List[ControlFlowGraph], branching : str = "branching") -> Union[int, PathComplexityRes]:
+    def evaluate(self, cfg: ControlFlowGraph, all_cfgs, branching : str = "branching") -> Union[int, PathComplexityRes]:
         """Given a graph, compute the metric."""
         # TODO: use full name of cfg (file name is deleted here)
         self.logger.d_msg(f"RGF FCAPC =========================================================")
