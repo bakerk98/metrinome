@@ -13,3 +13,7 @@ src/.mypy_cache/
 /src/coverage.xml
 /src/htmlcov/
 /src/.dmypy.json
+/src/app/
+/src/small_cfg.c
+*~
+/src/*.c
