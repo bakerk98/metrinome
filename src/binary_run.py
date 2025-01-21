@@ -9,6 +9,8 @@ import os,sys
 import sympy
 import traceback
 
+#this script will return the "biggest" between path complexities of function path complexity and recursive path complexity
+
 files = sys.argv[1:]
 #print(files)
 for f in files:
@@ -30,26 +32,52 @@ for f in files:
     #     sys.exit(1)
     graphs[graph_name] = graph
 
-metric_generator = FunctionCallPathComplexity(Log(display_output=False))
-backup_generator = RecursivePathComplexity(Log(display_output=False))
+fun_call_generator = FunctionCallPathComplexity(Log(display_output=False))
+recursive_generator = RecursivePathComplexity(Log(display_output=False))
+
 for k in graphs:
     graph = graphs[k]
+    recursiveCalls = False
+    results = []
+    for node in graph.metadata.calls.keys():
+        if graph.metadata.calls[node].split()[1] == graph.name.split(".")[1]:
+            recursiveCalls = True
+            break
+    #using a 10 second timeout, try to get the apc from both metrics if necessary
     try:
         with Timeout(10,"Timedout"):
-            result = metric_generator.evaluate(graph,graphs)
+            if recursiveCalls:
+                results.append(recursive_generator.evaluate(graph))
+        with Timeout(10,"Timedout"):
+            results.append(fun_call_generator.evaluate(graph,graphs)['rfcapc'])
+    #if we timeout, return timeout, if we error, "return" error
     except TimeoutError:
-        try:
-            with Timeout(10,"Timedoutagain"):
-                result = backup_generator.evaluate(graph,graphs)
-            try:
-                print(f"{graph.name}|{sympy.O(result[0])}|{result[0]}")
-            except:
-                print(f"{graph.name}|{result[0]}")
-        except TimeoutError:
-            print(f"{graph.name}|Timeout|Timeout")
+        print(f"{graph.name}|Timeout")
         continue
-    try:
-        apc = result['rfcapc']
-        print(f"{graph.name}|{sympy.O(apc)}|{apc}")
     except:
-        print(f"{graph.name}|{apc}")
+        print(f"{graph.name}|Error")
+        continue
+    #try and print the apc with sympy big o notation,
+    #Otherwise just print the apc results
+    if len(results) > 1:
+        #figure out which is bigger and return that
+        big_o_results = []
+        for res in results:
+            try:
+                big_o_results.append(sympy.O(res))
+            except:
+                big_o_results.append(res)
+        # biggest = ord1
+        # if ord2 in ord1:
+        #     biggest = ord2
+        # print(f"biggest: {biggest}")
+        biggest = big_o_results[0]
+        if big_o_results[1] in big_o_results[0]:
+            biggest = big_o_results[1]
+        print(f"{graph.name}|{biggest}")
+    else:
+        try:
+            res = sympy.O(results[0])
+            print(f"{graph.name}|{res}")
+        except:
+            print(f"{graph.name}|{results[0]}")
